@@ -1,0 +1,18 @@
+{
+    "protocol": "wireguard",
+    "settings": {
+        "secretKey": "",
+        "address": [],
+        "peers": [
+            {
+                "publicKey": "",
+                "endpoint": "engage.cloudflareclient.com:2408",
+                "allowedIPs": [
+                    "0.0.0.0/0",
+                    "::/0"
+                ]
+            }
+        ]
+    },
+    "tag": "WARP_OUTBOUND"
+}
