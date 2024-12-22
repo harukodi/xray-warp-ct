@@ -17,13 +17,10 @@
                 "decryption": "none"
             },
             "streamSettings": {
-                "network": "grpc",
-                "grpcSettings": {
-                    "serviceName": "",
-                    "multiMode": false,
-                    "idle_timeout": 60,
-                    "initial_windows_size": 35536,
-                    "permit_without_stream": true
+                "network": "xhttp",
+                "xhttpSettings": {
+                    "mode": "auto",
+                    "path": "PATH-GOES-HERE"
                 }
             }
         }
