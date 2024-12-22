@@ -12,12 +12,12 @@ def initialize():
     generate_wgcf_profile_and_register()
     generate_xray_config()
     generate_caddy_config()
-    start_xray_core()
+    #start_xray_core()
     #start_caddy_server()
 
 def startup():
     fetch_xray_core(xray_version)
-    start_xray_core()
+    #start_xray_core()
     #start_caddy_server()
 
 def main():
