@@ -1,5 +1,5 @@
 import json, uuid, string, random, segno
-from vars import domain_name, port, fingerprint
+from vars import domain_name, port, fingerprint, cloudflare_auth_token
 from warp_class import Warp
 from urllib.parse import quote
 
@@ -70,6 +70,9 @@ def generate_caddy_config():
     # Sets the match path for the handle
     caddy_match_path = caddy_json_data['apps']['http']['servers']['srv0']['routes'][0]['handle'][0]['routes'][0]['match'][0]
     caddy_match_path['path'] = f"/{xray_path}/*"
+    # Sets the cloudflare auth token for tls cert
+    cloudflare_auth_token = caddy_json_data['apps']['tls']['automation']['policies'][0]['issuers'][0]['challenges']['dns']['provider']
+    cloudflare_auth_token['api_token'] = cloudflare_auth_token
     # Saves the dynamic config file
     with open("./caddy_config/caddyfile.json", "w") as caddyfile:
         json.dump(caddy_json_data, caddyfile, indent=4)
