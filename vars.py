@@ -1,5 +1,5 @@
 from os import environ
-domain_name = environ.get("DOMAIN_NAME", "test.harus.cloud")
+domain_name = environ.get("DOMAIN_NAME")
 port = environ.get("PORT", "443")
 fingerprint = environ.get("FINGERPRINT", "chrome")
 xray_version = environ.get("XRAY_VERSION", "latest")
