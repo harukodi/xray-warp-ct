@@ -16,7 +16,7 @@ WORKDIR /xray_base
 COPY . .
 RUN mkdir /xray_base/caddy_certs && \
     chmod +x /usr/bin/caddy && \
-    apk add --no-cache libcap && \
+    apk update && apk add --no-cache libcap && \
     setcap cap_net_bind_service=+ep /usr/bin/caddy && \
     chown -R nobody:nobody /xray_base && \
     chmod -R ug+rwx /xray_base && \
