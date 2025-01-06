@@ -1,9 +1,9 @@
 from os import environ
 import uuid, string, random
 
-xray_uuid = uuid.uuid4()
+xray_uuid = str(uuid.uuid4())
 xray_path = ''.join(random.choices(string.ascii_uppercase + string.ascii_lowercase, k=38))
-domain_name = environ.get("DOMAIN_NAME")
+domain_name = environ.get("DOMAIN_NAME", "test.test.test")
 port = environ.get("PORT", "443")
 fingerprint = environ.get("FINGERPRINT", "chrome")
 xray_version = environ.get("XRAY_VERSION", "latest")
