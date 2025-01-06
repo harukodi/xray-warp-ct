@@ -1,8 +1,10 @@
 import os.path, atexit, signal, sys
-from generate_configs import generate_xray_config, generate_caddy_config
 from fetch_xray_core import fetch_xray_core
 from fetch_wgcf import fetch_wgcf
 from generate_wgcf_profile import generate_wgcf_profile_and_register
+from generate_xray_config import generate_xray_config
+from generate_xray_qr_code import generate_xray_qr_code
+from generate_caddy_config import generate_caddy_config
 from start_services import start_xray_core, start_caddy_server
 from vars import xray_version, wgcf_version
 
@@ -16,6 +18,7 @@ def initialize():
     fetch_xray_core(xray_version)
     generate_wgcf_profile_and_register()
     generate_xray_config()
+    generate_xray_qr_code()
     generate_caddy_config()
 
 def fetch_latest_xray_core_on_startup():
