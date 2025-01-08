@@ -4,7 +4,7 @@
     },
     "inbounds": [
         {
-            "tag": "VLESS_INBOUND_GRPC",
+            "tag": "VLESS_INBOUND_XHTTP",
             "listen": "0.0.0.0",
             "port": 8443,
             "protocol": "vless",
