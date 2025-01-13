@@ -12,9 +12,6 @@ def fetch_latest_xray_version():
     xray_latest_version = json_data[0]['name']
     return xray_latest_version
 
-def chmod_xray_core():
-    subprocess.run(["chmod", "+x", "./xray_core/xray"])
-
 def fetch_xray_core(version):
     arch_platform = platform.machine()
     if arch_platform in ["AMD64", "x86_64"]:
@@ -56,4 +53,3 @@ def fetch_xray_core(version):
                 xray_zip_file.extractall(path="./xray_core")
             remove(f"./xray_core/{xray_platform_zip}")
             print(f"Xray-core: {xray_latest_version} aarch64")
-    chmod_xray_core()

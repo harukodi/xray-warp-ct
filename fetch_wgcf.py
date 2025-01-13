@@ -10,9 +10,6 @@ def fetch_latest_wgcf_version():
     wgcf_latest_version = json_data[0]['name']
     return wgcf_latest_version
 
-def chmod_wgcf():
-    subprocess.run(["chmod", "+x", "./wgcf/wgcf"])
-
 def fetch_wgcf(version):
     arch_platform = platform.machine()
     if arch_platform in ["AMD64", "x86_64"]:
@@ -42,4 +39,3 @@ def fetch_wgcf(version):
             wgcf_path = f"./wgcf/wgcf"
             urlretrieve(wgcf_url, wgcf_path)
             print(f"Wgcf: v{wgcf_latest_version} aarch64")
-    chmod_wgcf()

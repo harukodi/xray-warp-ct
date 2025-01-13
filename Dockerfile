@@ -15,13 +15,14 @@ ENV XDG_DATA_HOME=/xray_base/caddy_certs
 EXPOSE 443
 COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 WORKDIR /xray_base
-COPY . .
+COPY . /xray_base/
 RUN addgroup -S xray_group && adduser -S xray_user -G xray_group
 RUN mkdir /xray_base/caddy_certs && \
     chmod +x /usr/bin/caddy && \
     apk update && apk add --no-cache libcap && \
     setcap cap_net_bind_service=+ep /usr/bin/caddy && \
     chown -R xray_user:xray_group /xray_base && \
+    chmod -R o+rw /xray_base/wgcf /xray_base/xray_core && \
     rm -rf /var/cache/apk/*
 RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=requirements.txt,target=requirements.txt \
