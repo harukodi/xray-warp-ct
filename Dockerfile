@@ -16,16 +16,15 @@ EXPOSE 443
 COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 WORKDIR /xray_base
 COPY . .
+RUN addgroup -S xray_group && adduser -S xray_user -G xray_group
 RUN mkdir /xray_base/caddy_certs && \
     chmod +x /usr/bin/caddy && \
     apk update && apk add --no-cache libcap && \
     setcap cap_net_bind_service=+ep /usr/bin/caddy && \
-    chown -R nobody:nobody /xray_base && \
-    chmod -R ug+rwx /xray_base && \
-    chmod -R o+rx /xray_base && \
+    chown -R xray_user:xray_group /xray_base && \
     rm -rf /var/cache/apk/*
 RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=requirements.txt,target=requirements.txt \
     python -m pip install -r requirements.txt
-USER nobody
+USER xray_user
 CMD ["python", "main.py"]
