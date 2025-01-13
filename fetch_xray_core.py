@@ -26,7 +26,7 @@ def fetch_xray_core(version):
             with ZipFile(f"./xray_core/{xray_platform_zip}", "r") as xray_zip_file:
                 xray_zip_file.extractall(path="./xray_core")
             remove(f"./xray_core/{xray_platform_zip}")
-            print(f"Xray-core: {version}")
+            print(f"Xray-core: {version} x86_64")
         else:
             xray_latest_version = fetch_latest_xray_version()
             xray_url = f"https://github.com/XTLS/Xray-core/releases/download/{xray_latest_version}/{xray_platform_zip}"
@@ -35,7 +35,7 @@ def fetch_xray_core(version):
             with ZipFile(f"./xray_core/{xray_platform_zip}", "r") as xray_zip_file:
                 xray_zip_file.extractall(path="./xray_core")
             remove(f"./xray_core/{xray_platform_zip}")
-            print(f"Xray-core: {xray_latest_version}")
+            print(f"Xray-core: {xray_latest_version} x86_64")
     
     if arch_platform in ["aarch64"]:
         xray_platform_zip = "Xray-linux-arm64-v8a.zip"
@@ -46,7 +46,7 @@ def fetch_xray_core(version):
             with ZipFile(f"./xray_core/{xray_platform_zip}", "r") as xray_zip_file:
                 xray_zip_file.extractall(path="./xray_core")
             remove(f"./xray_core/{xray_platform_zip}")
-            print(f"Xray-core: {version}")
+            print(f"Xray-core: {version} aarch64")
         else:
             xray_latest_version = fetch_latest_xray_version()
             xray_url = f"https://github.com/XTLS/Xray-core/releases/download/{xray_latest_version}/{xray_platform_zip}"
@@ -55,5 +55,5 @@ def fetch_xray_core(version):
             with ZipFile(f"./xray_core/{xray_platform_zip}", "r") as xray_zip_file:
                 xray_zip_file.extractall(path="./xray_core")
             remove(f"./xray_core/{xray_platform_zip}")
-            print(f"Xray-core: {xray_latest_version}")
+            print(f"Xray-core: {xray_latest_version} aarch64")
     chmod_xray_core()

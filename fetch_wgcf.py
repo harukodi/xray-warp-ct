@@ -20,7 +20,7 @@ def fetch_wgcf(version):
             wgcf_url = f"https://github.com/ViRb3/wgcf/releases/download/v{version}/wgcf_{version}_linux_amd64"
             wgcf_path = f"./wgcf/wgcf"
             urlretrieve(wgcf_url, wgcf_path)
-            print(f"Wgcf: v{version}")
+            print(f"Wgcf: v{version} x86_64")
         else:
             wgcf_latest_version = fetch_latest_wgcf_version()
             wgcf_latest_version_formated = wgcf_latest_version.replace('v', '')
@@ -34,7 +34,7 @@ def fetch_wgcf(version):
             wgcf_url = f"https://github.com/ViRb3/wgcf/releases/download/v{version}/wgcf_{version}_linux_arm64"
             wgcf_path = f"./wgcf/wgcf"
             urlretrieve(wgcf_url, wgcf_path)
-            print(f"Wgcf: v{version}")
+            print(f"Wgcf: v{version} aarch64")
         else:
             wgcf_latest_version = fetch_latest_wgcf_version()
             wgcf_latest_version_formated = wgcf_latest_version.replace('v', '')
