@@ -46,3 +46,8 @@ services:
  ┃ ┗ 📂xray_config  
  ┗ 📜docker-compose.yaml
 ```
+
+## Spin up the container
+```bash
+sudo docker-compose up -d
+```
