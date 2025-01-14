@@ -1,0 +1,153 @@
+{
+    "apps": {
+        "http": {
+            "servers": {
+                "srv0": {
+                    "listen": [
+                        ":443"
+                    ],
+                    "routes": [
+                        {
+                            "match": [
+                                {
+                                    "host": [
+                                        "subdomain.domain.tld"
+                                    ]
+                                }
+                            ],
+                            "handle": [
+                                {
+                                    "handler": "subroute",
+                                    "routes": [
+                                        {
+                                            "group": "group2",
+                                            "handle": [
+                                                {
+                                                    "handler": "subroute",
+                                                    "routes": [
+                                                        {
+                                                            "handle": [
+                                                                {
+                                                                    "flush_interval": -1,
+                                                                    "handler": "reverse_proxy",
+                                                                    "headers": {
+                                                                        "request": {
+                                                                            "set": {
+                                                                                "X-Forwarded-For": [
+                                                                                    "{http.request.header.CF-Connecting-IP}"
+                                                                                ],
+                                                                                "X-Forwarded-Proto": [
+                                                                                    "{http.request.scheme}"
+                                                                                ],
+                                                                                "X-Real-Ip": [
+                                                                                    "{http.request.header.CF-Connecting-IP}"
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "transport": {
+                                                                        "protocol": "http",
+                                                                        "versions": [
+                                                                            "h2c"
+                                                                        ]
+                                                                    },
+                                                                    "upstreams": [
+                                                                        {
+                                                                            "dial": "0.0.0.0:8443"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ],
+                                                            "match": [
+                                                                {
+                                                                    "path": [
+                                                                        "/PATH-GOES-HERE/*"
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ],
+                                            "match": [
+                                                {
+                                                    "path": [
+                                                        "/PATH-GOES-HERE/*"
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "group": "group2",
+                                            "handle": [
+                                                {
+                                                    "handler": "subroute",
+                                                    "routes": [
+                                                        {
+                                                            "handle": [
+                                                                {
+                                                                    "body": "Error: Invalid or Missing API Key",
+                                                                    "close": true,
+                                                                    "handler": "static_response",
+                                                                    "status_code": 401
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "terminal": true
+                        }
+                    ],
+                    "tls_connection_policies": [
+                        {
+                            "match": {
+                                "sni": [
+                                    "subdomain.domain.tld"
+                                ]
+                            },
+                            "cipher_suites": [
+                                "TLS_AES_256_GCM_SHA384",
+                                "TLS_CHACHA20_POLY1305_SHA256"
+                            ],
+                            "curves": [
+                                "x25519"
+                            ],
+                            "protocol_min": "tls1.3",
+                            "protocol_max": "tls1.3"
+                        },
+                        {}
+                    ]
+                }
+            }
+        },
+        "tls": {
+            "automation": {
+                "policies": [
+                    {
+                        "subjects": [
+                            "subdomain.domain.tld"
+                        ],
+                        "issuers": [
+                            {
+                                "challenges": {
+                                    "dns": {
+                                        "provider": {
+                                            "api_token": "CLOUDFLARE-AUTH-TOKEN-GOES-HERE",
+                                            "name": "cloudflare"
+                                        }
+                                    }
+                                },
+                                "module": "acme"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}
