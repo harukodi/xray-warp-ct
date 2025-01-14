@@ -52,3 +52,5 @@ services:
 ```bash
 sudo docker-compose up -d
 ```
+
+Made with ❤️ in Sweden!
