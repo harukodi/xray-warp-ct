@@ -53,4 +53,4 @@ services:
 sudo docker-compose up -d
 ```
 
-Made with ❤️ in Sweden!
+Made with ❤️ in Sweden! By xia1997x
