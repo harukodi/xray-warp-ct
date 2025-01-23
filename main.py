@@ -8,12 +8,11 @@ from generate_caddy_config import generate_caddy_config
 from start_services import start_xray_core, start_caddy_server
 from vars import xray_version, wgcf_version
 
-
 files_to_check = [
     "./xray_config/xray_config.json",
     "./xray_config/xray_client_qr_code.png",
-    "./caddy_config/caddyfile.json",
-    "./xray_config/vless_link.txt"
+    "./xray_config/vless_link.txt",
+    "./caddy_config/caddyfile.json"
 ]
 
 
