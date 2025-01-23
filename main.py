@@ -8,6 +8,15 @@ from generate_caddy_config import generate_caddy_config
 from start_services import start_xray_core, start_caddy_server
 from vars import xray_version, wgcf_version
 
+
+files_to_check = [
+    "./xray_config/xray_config.json",
+    "./xray_config/xray_client_qr_code.png",
+    "./caddy_config/caddyfile.json",
+    "./xray_config/vless_link.txt"
+]
+
+
 def start_services():
     global xray_process, caddy_process
     xray_process = start_xray_core()
@@ -37,7 +46,7 @@ def exit_function():
     signal.pause()
 
 def main():
-    if not os.path.exists("./xray_config/xray_config.json") and not os.path.exists("./xray_config/xray_client_qr_code.png") and not os.path.exists("./caddy_config/caddyfile.json"):
+    if all(not os.path.exists(file) for file in files_to_check):
         initialize()
     else:
         fetch_latest_xray_core_on_startup()
