@@ -34,3 +34,5 @@ jobs:
           tags: |
             ${{ vars.DOCKERHUB_USERNAME }}/xray-warp:latest
             ${{ vars.DOCKERHUB_USERNAME }}/xray-warp:${{ env.CURRENT_DATE }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
