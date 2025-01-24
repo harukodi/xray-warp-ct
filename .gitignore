@@ -172,3 +172,4 @@ xray_core/README.md
 xray_core/geoip.dat
 xray_core/geosite.dat
 xray_core/xray
+xray_config/vless_link.txt
