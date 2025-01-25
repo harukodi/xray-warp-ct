@@ -22,7 +22,7 @@ RUN mkdir /xray_base/caddy_certs && \
     apk update && apk add --no-cache libcap && \
     setcap cap_net_bind_service=+ep /usr/bin/caddy && \
     chown -R xray_user:xray_group /xray_base && \
-    chmod -R o+rw /xray_base/wgcf /xray_base/xray_core && \
+    chmod -R o+rwx /xray_base/wgcf /xray_base/xray_core && \
     rm -rf /var/cache/apk/*
 RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=requirements.txt,target=requirements.txt \
