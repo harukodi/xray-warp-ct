@@ -1,6 +1,6 @@
 import os.path, atexit, signal, sys
-from fetch_xray_core import fetch_xray_core
-from fetch_wgcf import fetch_wgcf
+from fetch_xray_core import fetch_xray_core, chmod_xray_core
+from fetch_wgcf import fetch_wgcf, chmod_wgcf
 from generate_wgcf_profile import generate_wgcf_profile_and_register
 from generate_xray_config import generate_xray_config
 from generate_xray_qr_code_and_link import generate_xray_qr_code, write_vless_link_to_file
@@ -24,6 +24,8 @@ def start_services():
 def initialize():
     fetch_wgcf(wgcf_version)
     fetch_xray_core(xray_version)
+    chmod_wgcf()
+    chmod_xray_core()
     generate_wgcf_profile_and_register()
     generate_xray_config()
     generate_xray_qr_code()
