@@ -12,7 +12,8 @@ FROM python:${PYTHON_VERSION}
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV XDG_DATA_HOME=/xray_base/caddy_certs
-EXPOSE 443
+EXPOSE 443/tcp
+EXPOSE 443/udp
 COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 WORKDIR /xray_base
 COPY . /xray_base/
