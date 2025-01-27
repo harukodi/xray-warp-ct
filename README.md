@@ -32,6 +32,7 @@ services:
       - WGCF_VERSION=2.2.24
       - CLOUDFLARE_AUTH_TOKEN=
       - ENABLE_CADDY_LOG=false
+      - ENABLE_IPV6=False
     volumes:
       - ./certs:/xray_base/caddy_certs
       - ./config/xray_config:/xray_base/xray_config
