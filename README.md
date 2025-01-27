@@ -28,11 +28,11 @@ services:
       - DOMAIN_NAME=subdomain.domain.tld
       - PORT=443
       - FINGERPRINT=chrome
-      - XRAY_VERSION=24.12.31
+      - XRAY_VERSION=24.12.31 # The latest tag in the Xray GitHub repo may point to a pre-release; use specific versions for stability.
       - WGCF_VERSION=2.2.24
       - CLOUDFLARE_AUTH_TOKEN=
-      - ENABLE_CADDY_LOG=false
-      - ENABLE_IPV6=False
+      - ENABLE_CADDY_LOG=False
+      - ENABLE_IPV6=False # Should be false per default if VPS supports ipv6 you can enable this!
     volumes:
       - ./certs:/xray_base/caddy_certs
       - ./config/xray_config:/xray_base/xray_config
