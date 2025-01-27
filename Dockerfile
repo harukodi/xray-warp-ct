@@ -12,7 +12,8 @@ FROM python:${PYTHON_VERSION}
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV XDG_DATA_HOME=/xray_base/caddy_certs
-EXPOSE 443
+EXPOSE 443/tcp
+EXPOSE 443/udp
 COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 WORKDIR /xray_base
 COPY . /xray_base/
@@ -22,7 +23,7 @@ RUN mkdir /xray_base/caddy_certs && \
     apk update && apk add --no-cache libcap && \
     setcap cap_net_bind_service=+ep /usr/bin/caddy && \
     chown -R xray_user:xray_group /xray_base && \
-    chmod -R o+rw /xray_base/wgcf /xray_base/xray_core && \
+    chmod -R o+rwx /xray_base/wgcf /xray_base/xray_core && \
     rm -rf /var/cache/apk/*
 RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=requirements.txt,target=requirements.txt \

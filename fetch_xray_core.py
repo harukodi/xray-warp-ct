@@ -5,6 +5,10 @@ from zipfile import ZipFile
 from os import remove
 from vars import xray_version
 
+def chmod_xray_core():
+    file_path="./xray_core/xray"
+    subprocess.run(["chmod", "+x", file_path], stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
+
 def fetch_latest_xray_version():
     xray_tags_url = "https://api.github.com/repos/Xtls/Xray-core/tags"
     response = urlopen(xray_tags_url)

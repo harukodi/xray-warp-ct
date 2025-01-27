@@ -3,6 +3,10 @@ from urllib.request import urlopen
 import json, platform, subprocess
 from vars import wgcf_version
 
+def chmod_wgcf():
+    file_path="./wgcf/wgcf"
+    subprocess.run(["chmod", "+x", file_path], stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
+
 def fetch_latest_wgcf_version():
     wgcf_tags_url = "https://api.github.com/repos/ViRb3/wgcf/tags"
     response = urlopen(wgcf_tags_url)

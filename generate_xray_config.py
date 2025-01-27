@@ -1,5 +1,5 @@
 import json
-from vars import xray_uuid, xray_path
+from vars import xray_uuid, xray_path, enable_ipv6
 from warp_class import Warp
 
 def load_xray_json_data():
@@ -19,7 +19,10 @@ def generate_xray_config():
     XRAY_SETTINGS_UUID['id'] = xray_uuid
     XRAY_STREAMSETTINGS_XHTTP = xray_json_data['inbounds'][0]['streamSettings']['xhttpSettings']
     XRAY_STREAMSETTINGS_XHTTP['path'] = xray_path
-    warp_addresses = [Warp.warp_ipv4(), Warp.warp_ipv6()]
+    if enable_ipv6.lower() == "true":
+        warp_addresses = [Warp.warp_ipv4(), Warp.warp_ipv6()]
+    else:
+        warp_addresses = [Warp.warp_ipv4()]
     warp_json_data['settings']['secretKey'] = Warp.warp_private_key()
     warp_json_data['settings']['address'] = warp_addresses
     warp_json_data['settings']['peers'][0]['publicKey'] = Warp.warp_public_key()
