@@ -10,11 +10,20 @@ def chmod_xray_core():
     subprocess.run(["chmod", "+x", file_path], stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
 
 def fetch_latest_xray_version():
+    xray_releases_url = "https://api.github.com/repos/XTLS/Xray-core/releases"
+    response = urlopen(xray_releases_url)
+    json_data = json.loads(response.read().decode('utf-8'))
+    for item in json_data:
+        if not item['prerelease']:
+            return item['name']
+
+def fetch_latest_xray_version():
     xray_tags_url = "https://api.github.com/repos/Xtls/Xray-core/tags"
     response = urlopen(xray_tags_url)
     json_data = json.loads(response.read().decode('utf-8'))
     xray_latest_version = json_data[0]['name']
     return xray_latest_version
+
 
 def fetch_xray_core(version):
     arch_platform = platform.machine()
@@ -57,3 +66,6 @@ def fetch_xray_core(version):
                 xray_zip_file.extractall(path="./xray_core")
             remove(f"./xray_core/{xray_platform_zip}")
             print(f"Xray-core: {xray_latest_version} aarch64")
+
+
+fetch_xray_core(xray_version)
