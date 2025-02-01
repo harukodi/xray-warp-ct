@@ -15,7 +15,7 @@ def fetch_latest_xray_version():
     json_data = json.loads(response.read().decode('utf-8'))
     for item in json_data:
         if not item['prerelease']:
-            return item['name']
+            return item['tag_name']
 
 def fetch_xray_core(version):
     arch_platform = platform.machine()
