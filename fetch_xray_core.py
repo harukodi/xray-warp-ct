@@ -66,6 +66,3 @@ def fetch_xray_core(version):
                 xray_zip_file.extractall(path="./xray_core")
             remove(f"./xray_core/{xray_platform_zip}")
             print(f"Xray-core: {xray_latest_version} aarch64")
-
-
-fetch_xray_core(xray_version)
