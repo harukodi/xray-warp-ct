@@ -2,11 +2,6 @@ name: docker-multiplatform-build
 
 on:
   workflow_dispatch:
-    inputs:
-      description:
-        description: 'Description'
-        required: true
-        type: string
 
 jobs:
   docker:
