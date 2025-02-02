@@ -1,9 +1,12 @@
 name: docker-multiplatform-build
 
 on:
-  push:
-    branches:
-      - "main"
+  workflow_dispatch:
+    inputs:
+      description:
+        description: 'Description'
+        required: true
+        type: string
 
 jobs:
   docker:
