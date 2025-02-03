@@ -53,5 +53,7 @@ services:
 ```bash
 sudo docker-compose up -d
 ```
+Enjoying this project? Support me with a coffee! ☕️✨ 
+Thanks for your support! 🙌 https://ko-fi.com/xia1997x⁠
 
 Made with ❤️ in Sweden! By xia1997x
