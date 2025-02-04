@@ -53,6 +53,8 @@ services:
 ```bash
 sudo docker-compose up -d
 ```
+### **NOTE:** After starting the container, you can find the VLESS link and QR code inside the `xray_config` folder.
+
 Enjoying this project? Support me with a coffee! ☕️✨ 
 Thanks for your support! 🙌 https://ko-fi.com/xia1997x⁠
 
