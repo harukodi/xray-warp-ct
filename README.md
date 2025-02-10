@@ -28,7 +28,7 @@ services:
       - DOMAIN_NAME=subdomain.domain.tld
       - PORT=443
       - FINGERPRINT=chrome
-      - XRAY_VERSION=24.12.31 # The latest tag in the Xray GitHub repo may point to a pre-release; use specific versions for stability.
+      - XRAY_VERSION=24.12.31 # The latest tag will now skip over pre-releases
       - WGCF_VERSION=2.2.24
       - CLOUDFLARE_AUTH_TOKEN=
       - ENABLE_CADDY_LOG=False
