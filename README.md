@@ -19,7 +19,7 @@ touch docker-compose.yaml
 ```yaml
 services:
   xray-warp:
-    image: xray-warp:latest
+    image: xia1997x/xray-warp:latest
     container_name: xray-warp-ct
     user: 1000:1000
     ports:
