@@ -1,5 +1,5 @@
 # Build caddy with cloudflare plugin
-ARG PYTHON_VERSION=3.11.11-alpine3.21
+ARG PYTHON_VERSION=3.13.2-alpine3.21
 ARG CADDY_BUILDER_VERSION=2.9-builder-alpine
 ARG CADDY_SERVER_VERSION=2.8.4-alpine
 FROM caddy:${CADDY_BUILDER_VERSION} AS builder
