@@ -32,7 +32,7 @@ def initialize():
     write_vless_link_to_file()
     generate_caddy_config()
 
-def fetch_latest_xray_core_on_startup():
+def fetch_xray_core_on_startup():
     fetch_xray_core(xray_version)
 
 def exit_function():
@@ -50,7 +50,7 @@ def main():
     if all(not os.path.exists(file) for file in files_to_check):
         initialize()
     else:
-        fetch_latest_xray_core_on_startup()
+        fetch_xray_core_on_startup()
         chmod_xray_core()
     start_services()
     exit_function()
