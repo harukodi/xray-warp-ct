@@ -19,25 +19,26 @@ def fetch_public_ip():
     ip_data = response.read().decode("utf-8").strip()
     return ip_data
 
-def fetch_cf_zone_id():
-    zone_id = cf_client.zones.list().result[0].id
-    return zone_id
+def fetch_cf_zone_id(dns_record_name):
+    main_domain_name = ".".join(dns_record_name.split(".")[-2:])
+    zone_ids = cf_client.zones.list()
+    for zone_id in zone_ids:
+        if zone_id.name == main_domain_name:
+            return zone_id.id
 
-def create_cf_dns_record(record_name):
+def create_cf_dns_record(dns_record_name):
     try:
         if verify_cf_api_token():
             cf_client.dns.records.create(
-                zone_id=fetch_cf_zone_id(),
+                zone_id=fetch_cf_zone_id(dns_record_name),
                 content=fetch_public_ip(),
-                name=record_name,
+                name=dns_record_name,
                 proxied=True,
                 type="A"
             )
-            print(f"DNS record for {record_name} has been created.")
+            print(f"DNS record for {dns_record_name} has been created.")
         else:
             print("Invalid Cloudflare API token or insufficient permissions.")
             exit()
     except Exception:
         print("This dns record already exists.")
-
-create_cf_dns_record("xray.harus.cloud")

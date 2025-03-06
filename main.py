@@ -1,4 +1,5 @@
 import os.path, atexit, signal, sys
+from create_cf_dns_record import create_cf_dns_record
 from fetch_xray_core import fetch_xray_core, chmod_xray_core
 from fetch_wgcf import fetch_wgcf, chmod_wgcf
 from generate_wgcf_profile import generate_wgcf_profile_and_register
@@ -6,7 +7,7 @@ from generate_xray_config import generate_xray_config
 from generate_xray_qr_code_and_link import generate_xray_qr_code, write_vless_link_to_file
 from generate_caddy_config import generate_caddy_config
 from start_services import start_xray_core, start_caddy_server
-from vars import xray_version, wgcf_version
+from vars import xray_version, wgcf_version, domain_name
 
 files_to_check = [
     "./xray_config/xray_config.json",
@@ -22,6 +23,7 @@ def start_services():
     caddy_process = start_caddy_server()
 
 def initialize():
+    create_cf_dns_record(domain_name)
     fetch_wgcf(wgcf_version)
     fetch_xray_core(xray_version)
     chmod_wgcf()
