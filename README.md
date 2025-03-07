@@ -1,6 +1,6 @@
 # Xray-Warp docker container
 
-## PREREQUISITES
+## Prerequisites
 * Docker and Docker-compose
 * Non-root account
 * Domain name on cloudflare
