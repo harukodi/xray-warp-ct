@@ -27,7 +27,6 @@ services:
     environment:
       - DOMAIN_NAME=subdomain.domain.tld
       - PORT=443
-      - FINGERPRINT=chrome
       - XRAY_VERSION=latest
       - WGCF_VERSION=2.2.24
       - CLOUDFLARE_AUTH_TOKEN=
