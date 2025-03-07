@@ -54,9 +54,14 @@ services:
 > - Default `443`
 >
 > `XRAY_VERSION`
+> - Used to fetch the `xray core`
 > - Will now skip over pre-releases. 
 > - To set a custom xray core version you can set the variable to `XRAY_VERSION=25.3.6`.
 > - Default `latest`
+>
+> `WGCF_VERSION`
+> - Used to fetch the `WGCF` cli tool to create the warp profile to use with xray core
+> - Default `2.2.24`
 > 
 > `ENABLE_CADDY_LOG`
 > - Can be set to `True` if you want the log output of caddy.
