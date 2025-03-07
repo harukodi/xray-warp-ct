@@ -38,33 +38,35 @@ services:
       - ./config/xray_config:/xray_base/xray_config
       - ./config/caddy_config:/xray_base/caddy_config
 ```
+
 ### **ENVs:**
-> `DOMAIN_NAME` environment variable 
-> - will now create the dns record for you on Cloudflare.
+> `DOMAIN_NAME`
+> - Creates the dns record for you on Cloudflare.
 > - Sets your domain for the xray-warp container
+> - Must be a subdomain in the format of `subdomain.domain.tld`
 > - `Required`
 >
-> `PORT` environment variable 
-> - is used to set the port you want to use, if you change the port of the docker container. Keep in mind that the port inside of the docker container can not be changed.
+> `PORT`
+> - Used to set the port you want to use, if you change the port of the docker container. Keep in mind that the port inside of the docker container can not be changed.
 > - `YOUR-CUSTOM-PORT:443`. 
 > - This is also used to set the right port for the vless link
 > - `Required`
 > - Default `443`
 >
-> `XRAY_VERSION` environment variable 
+> `XRAY_VERSION`
 > - Will now skip over pre-releases. 
 > - To set a custom xray core version you can set the variable to `XRAY_VERSION=25.3.6`.
 > - Default `latest`
 > 
-> `ENABLE_CADDY_LOG` environment variable 
-> - can be set to `True` if you want the log output of caddy.
+> `ENABLE_CADDY_LOG`
+> - Can be set to `True` if you want the log output of caddy.
 > - Default `False`
 > 
-> `CLOUDFLARE_AUTH_TOKEN` environment variable 
+> `CLOUDFLARE_AUTH_TOKEN`
 > - Stores the Cloudflare API token required for authentication and the tls certificate creation.
 > - `Required`
 > 
-> `ENABLE_IPV6` environment variable 
+> `ENABLE_IPV6`
 > - Can be set to `True` if the vps supports ipv6.
 > - Default `False`
 
