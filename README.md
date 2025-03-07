@@ -4,7 +4,7 @@
 * Docker and Docker-compose
 * Non-root account
 * Domain name on cloudflare
-* Cloudflare auth token with the `Zone.DNS` permission
+* Cloudflare auth token with the `Zone.DNS EDIT` and `Zone.Zone READ` permissions
 
 ## Create docker-compose file and the needed folders
 ```bash
@@ -28,16 +28,45 @@ services:
       - DOMAIN_NAME=subdomain.domain.tld
       - PORT=443
       - FINGERPRINT=chrome
-      - XRAY_VERSION=latest # The latest tag will now skip over pre-releases
+      - XRAY_VERSION=latest
       - WGCF_VERSION=2.2.24
       - CLOUDFLARE_AUTH_TOKEN=
       - ENABLE_CADDY_LOG=False
-      - ENABLE_IPV6=False # Should be false per default if VPS supports ipv6 you can enable this!
+      - ENABLE_IPV6=False
     volumes:
       - ./certs:/xray_base/caddy_certs
       - ./config/xray_config:/xray_base/xray_config
       - ./config/caddy_config:/xray_base/caddy_config
 ```
+### **ENVs:**
+> `DOMAIN_NAME` environment variable 
+> - will now create the dns record for you on Cloudflare.
+> - Sets your domain for the xray-warp container
+> - `Required`
+>
+> `PORT` environment variable 
+> - is used to set the port you want to use, if you change the port of the docker container. Keep in mind that the port inside of the docker container can not be changed.
+> - `YOUR-CUSTOM-PORT:443`. 
+> - This is also used to set the right port for the vless link
+> - `Required`
+> - Default `443`
+>
+> `XRAY_VERSION` environment variable 
+> - Will now skip over pre-releases. 
+> - To set a custom xray core version you can set the variable to `XRAY_VERSION=25.3.6`.
+> - Default `latest`
+> 
+> `ENABLE_CADDY_LOG` environment variable 
+> - can be set to `True` if you want the log output of caddy.
+> - Default `False`
+> 
+> `CLOUDFLARE_AUTH_TOKEN` environment variable 
+> - Stores the Cloudflare API token required for authentication and the tls certificate creation.
+> - `Required`
+> 
+> `ENABLE_IPV6` environment variable 
+> - Can be set to `True` if the vps supports ipv6.
+> - Default `False`
 
 ## File tree
 ```
