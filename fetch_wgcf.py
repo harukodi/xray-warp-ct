@@ -7,7 +7,7 @@ def chmod_wgcf():
     file_path="./wgcf/wgcf"
     subprocess.run(["chmod", "+x", file_path], stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
 
-def fetch_latest_wgcf_version():
+def fetch_latest_wgcf_version_tag():
     wgcf_tags_url = "https://api.github.com/repos/ViRb3/wgcf/tags"
     response = urlopen(wgcf_tags_url)
     json_data = json.loads(response.read().decode('utf-8'))
@@ -23,7 +23,7 @@ def fetch_wgcf(version):
             urlretrieve(wgcf_url, wgcf_path)
             print(f"Wgcf: v{version} x86_64")
         else:
-            wgcf_latest_version = fetch_latest_wgcf_version()
+            wgcf_latest_version = fetch_latest_wgcf_version_tag()
             wgcf_latest_version_formated = wgcf_latest_version.replace('v', '')
             wgcf_url = f"https://github.com/ViRb3/wgcf/releases/download/{wgcf_latest_version}/wgcf_{wgcf_latest_version_formated}_linux_amd64"
             wgcf_path = f"./wgcf/wgcf"
@@ -37,7 +37,7 @@ def fetch_wgcf(version):
             urlretrieve(wgcf_url, wgcf_path)
             print(f"Wgcf: v{version} aarch64")
         else:
-            wgcf_latest_version = fetch_latest_wgcf_version()
+            wgcf_latest_version = fetch_latest_wgcf_version_tag()
             wgcf_latest_version_formated = wgcf_latest_version.replace('v', '')
             wgcf_url = f"https://github.com/ViRb3/wgcf/releases/download/{wgcf_latest_version}/wgcf_{wgcf_latest_version_formated}_linux_arm64"
             wgcf_path = f"./wgcf/wgcf"

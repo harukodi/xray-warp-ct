@@ -9,7 +9,7 @@ def chmod_xray_core():
     file_path="./xray_core/xray"
     subprocess.run(["chmod", "+x", file_path], stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
 
-def fetch_latest_xray_version():
+def fetch_latest_xray_version_tag():
     xray_releases_url = "https://api.github.com/repos/XTLS/Xray-core/releases"
     response = urlopen(xray_releases_url)
     json_data = json.loads(response.read().decode('utf-8'))
@@ -34,7 +34,7 @@ def fetch_xray_core(version):
             unzip_xray_core(xray_platform_zip)
             print(f"Xray-core: {version} x86_64")
         else:
-            xray_latest_version = fetch_latest_xray_version()
+            xray_latest_version = fetch_latest_xray_version_tag()
             xray_url = f"https://github.com/XTLS/Xray-core/releases/download/{xray_latest_version}/{xray_platform_zip}"
             xray_core_path = f"./xray_core/{xray_platform_zip}"
             urlretrieve(xray_url, xray_core_path)
@@ -50,7 +50,7 @@ def fetch_xray_core(version):
             unzip_xray_core(xray_platform_zip)
             print(f"Xray-core: {version} aarch64")
         else:
-            xray_latest_version = fetch_latest_xray_version()
+            xray_latest_version = fetch_latest_xray_version_tag()
             xray_url = f"https://github.com/XTLS/Xray-core/releases/download/{xray_latest_version}/{xray_platform_zip}"
             xray_core_path = f"./xray_core/{xray_platform_zip}"
             urlretrieve(xray_url, xray_core_path)
