@@ -13,7 +13,7 @@ files_to_check = [
     "./xray_config/xray_config.json",
     "./xray_config/xray_client_qr_code.png",
     "./xray_config/vless_link.txt",
-    "./caddy_config/caddyfile.json"
+    "./caddy_config/caddyfile"
 ]
 
 
@@ -34,9 +34,6 @@ def initialize():
     write_vless_link_to_file()
     generate_caddy_config()
 
-def fetch_xray_core_on_startup():
-    fetch_xray_core(xray_version)
-
 def exit_function():
     def on_exit():
         xray_process.terminate()
@@ -52,7 +49,7 @@ def main():
     if all(not os.path.exists(file) for file in files_to_check):
         initialize()
     else:
-        fetch_xray_core_on_startup()
+        fetch_xray_core()
         chmod_xray_core()
     start_services()
     exit_function()

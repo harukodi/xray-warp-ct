@@ -31,28 +31,29 @@ def download_file(filename, version):
     try:
         urlretrieve(xray_base_url, f"{xray_core_path}/{filename}")
         unzip_xray_core(filename)
-    except urllib.error.HTTPError as e:
-        print(f"Xray-binary: failed to download, HTTP status code: {e.code}")
+        if arch_platform in ["AMD64", "x86_64"]:
+            print(f"Xray-core: {version} x86_64")
+        if arch_platform in ["aarch64"]:
+            print(f"Xray-core: {version} aarch64")
+    except (urllib.error.HTTPError, urllib.error.URLError) as e:
+        print(f"Xray-binary: failed to download, error: {e.reason}")
+        print("Falling back to already installed Xray binary!")
 
-def fetch_xray_core(version=xray_version):
+def fetch_xray_core():
     if arch_platform in ["AMD64", "x86_64"]:
         xray_platform_zip = "Xray-linux-64.zip"
         if xray_version.lower() != "latest":
-            download_file(xray_platform_zip, version)
-            print(f"Xray-core: {version} x86_64")
+            download_file(xray_platform_zip, xray_version)
         else:
             xray_latest_version = fetch_latest_xray_version_tag()
             download_file(xray_platform_zip, xray_latest_version)
-            print(f"Xray-core: {xray_latest_version} x86_64")
     
     if arch_platform in ["aarch64"]:
         xray_platform_zip = "Xray-linux-arm64-v8a.zip"
         if xray_version.lower() != "latest":
-            download_file(xray_platform_zip, version)
-            print(f"Xray-core: {version} aarch64")
+            download_file(xray_platform_zip, xray_version)
         else:
             xray_latest_version = fetch_latest_xray_version_tag()
             download_file(xray_platform_zip, xray_latest_version)
-            print(f"Xray-core: {xray_latest_version} aarch64")
 
 fetch_xray_core()

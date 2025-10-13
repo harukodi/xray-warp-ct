@@ -14,32 +14,34 @@ def fetch_latest_wgcf_version_tag():
     wgcf_latest_version = json_data[0]['name']
     return wgcf_latest_version
 
-def fetch_wgcf(version):
+def fetch_wgcf():
     arch_platform = platform.machine()
     if arch_platform in ["AMD64", "x86_64"]:
         if wgcf_version.lower() != "latest":
-            wgcf_url = f"https://github.com/ViRb3/wgcf/releases/download/v{version}/wgcf_{version}_linux_amd64"
+            wgcf_url = f"https://github.com/ViRb3/wgcf/releases/download/v{wgcf_version}/wgcf_{wgcf_version}_linux_amd64"
             wgcf_path = f"./wgcf/wgcf"
             urlretrieve(wgcf_url, wgcf_path)
-            print(f"Wgcf: v{version} x86_64")
+            print(f"Wgcf: v{wgcf_version} x86_64")
         else:
             wgcf_latest_version = fetch_latest_wgcf_version_tag()
             wgcf_latest_version_formated = wgcf_latest_version.replace('v', '')
             wgcf_url = f"https://github.com/ViRb3/wgcf/releases/download/{wgcf_latest_version}/wgcf_{wgcf_latest_version_formated}_linux_amd64"
             wgcf_path = f"./wgcf/wgcf"
             urlretrieve(wgcf_url, wgcf_path)
-            print(f"Wgcf: {wgcf_latest_version} x86_64")
+            print(f"Wgcf: {wgcf_latest_version_formated} x86_64")
 
     if arch_platform in ["aarch64"]:
         if wgcf_version.lower() != "latest":
-            wgcf_url = f"https://github.com/ViRb3/wgcf/releases/download/v{version}/wgcf_{version}_linux_arm64"
+            wgcf_url = f"https://github.com/ViRb3/wgcf/releases/download/v{wgcf_version}/wgcf_{wgcf_version}_linux_arm64"
             wgcf_path = f"./wgcf/wgcf"
             urlretrieve(wgcf_url, wgcf_path)
-            print(f"Wgcf: v{version} aarch64")
+            print(f"Wgcf: v{wgcf_version} aarch64")
         else:
             wgcf_latest_version = fetch_latest_wgcf_version_tag()
             wgcf_latest_version_formated = wgcf_latest_version.replace('v', '')
             wgcf_url = f"https://github.com/ViRb3/wgcf/releases/download/{wgcf_latest_version}/wgcf_{wgcf_latest_version_formated}_linux_arm64"
             wgcf_path = f"./wgcf/wgcf"
             urlretrieve(wgcf_url, wgcf_path)
-            print(f"Wgcf: v{wgcf_latest_version} aarch64")
+            print(f"Wgcf: v{wgcf_latest_version_formated} aarch64")
+
+fetch_wgcf()
