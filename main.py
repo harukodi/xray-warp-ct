@@ -25,7 +25,7 @@ def start_services():
 def initialize():
     create_cf_dns_record(domain_name)
     fetch_wgcf(wgcf_version)
-    fetch_xray_core(xray_version)
+    fetch_xray_core()
     chmod_wgcf()
     chmod_xray_core()
     generate_wgcf_profile_and_register()
