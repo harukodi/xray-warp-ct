@@ -23,7 +23,7 @@ def start_services():
     caddy_process = start_caddy_server()
 
 def initialize():
-    #create_cf_dns_record()
+    create_cf_dns_record()
     setup_wgcf()
     setup_xray_core()
     generate_wgcf_profile_and_register()

@@ -42,4 +42,4 @@ def create_cf_dns_record():
             print("Invalid Cloudflare API token or insufficient permissions.")
             sys.exit(1)
     except Exception:
-        print("This dns record already exists.")
+        print(f"DNS record for {domain_name} already exists.")
