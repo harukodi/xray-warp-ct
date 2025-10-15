@@ -167,5 +167,4 @@ wgcf/*
 !wgcf/.gitkeep
 xray_config/*
 !xray_config/.gitkeep
-!xray_config/xray_core/
 !xray_config/xray_core/.gitkeep
