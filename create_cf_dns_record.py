@@ -1,6 +1,7 @@
+import sys
 from urllib.request import urlopen
 from cloudflare import Cloudflare
-from vars import cloudflare_auth_token
+from vars import cloudflare_auth_token, domain_name
 
 cf_client = Cloudflare(
     api_token=cloudflare_auth_token
@@ -26,19 +27,19 @@ def fetch_cf_zone_id(dns_record_name):
         if zone_id.name == main_domain_name:
             return zone_id.id
 
-def create_cf_dns_record(dns_record_name):
+def create_cf_dns_record():
     try:
         if verify_cf_api_token():
             cf_client.dns.records.create(
-                zone_id=fetch_cf_zone_id(dns_record_name),
+                zone_id=fetch_cf_zone_id(domain_name),
                 content=fetch_public_ip(),
-                name=dns_record_name,
+                name=domain_name,
                 proxied=True,
                 type="A"
             )
-            print(f"DNS record for {dns_record_name} has been created.")
+            print(f"DNS record for {domain_name} has been created.")
         else:
             print("Invalid Cloudflare API token or insufficient permissions.")
-            exit()
+            sys.exit(1)
     except Exception:
         print("This dns record already exists.")

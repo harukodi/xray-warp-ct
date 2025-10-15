@@ -33,5 +33,6 @@
 **/values.dev.yaml
 **/.gitkeep
 **/requirements.in
+**/clean_up.sh
 LICENSE
 README.md

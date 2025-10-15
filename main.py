@@ -1,19 +1,19 @@
-import os.path, atexit, signal, sys
+import atexit, signal, sys
+from os import path
 from create_cf_dns_record import create_cf_dns_record
-from fetch_xray_core import fetch_xray_core, chmod_xray_core
-from fetch_wgcf import fetch_wgcf, chmod_wgcf
+from setup_xray_core import setup_xray_core
+from setup_wgcf import setup_wgcf
 from generate_wgcf_profile import generate_wgcf_profile_and_register
 from generate_xray_config import generate_xray_config
-from generate_xray_qr_code_and_link import generate_xray_qr_code, write_vless_link_to_file
+from generate_xray_qr_code_and_vless_link import generate_xray_qr_code_and_vless_link
 from generate_caddy_config import generate_caddy_config
 from start_services import start_xray_core, start_caddy_server
-from vars import xray_version, wgcf_version, domain_name
 
 files_to_check = [
+    "./caddy_config/Caddyfile",
     "./xray_config/xray_config.json",
     "./xray_config/xray_client_qr_code.png",
-    "./xray_config/vless_link.txt",
-    "./caddy_config/caddyfile"
+    "./xray_config/vless_link.txt"
 ]
 
 
@@ -23,16 +23,13 @@ def start_services():
     caddy_process = start_caddy_server()
 
 def initialize():
-    create_cf_dns_record(domain_name)
-    fetch_wgcf(wgcf_version)
-    fetch_xray_core()
-    chmod_wgcf()
-    chmod_xray_core()
+    #create_cf_dns_record()
+    setup_wgcf()
+    setup_xray_core()
     generate_wgcf_profile_and_register()
     generate_xray_config()
-    generate_xray_qr_code()
-    write_vless_link_to_file()
     generate_caddy_config()
+    generate_xray_qr_code_and_vless_link()
 
 def exit_function():
     def on_exit():
@@ -46,11 +43,10 @@ def exit_function():
     signal.pause()
 
 def main():
-    if all(not os.path.exists(file) for file in files_to_check):
+    if all(not path.exists(file) for file in files_to_check):
         initialize()
     else:
-        fetch_xray_core()
-        chmod_xray_core()
+        setup_xray_core()
     start_services()
     exit_function()
 

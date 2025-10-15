@@ -27,6 +27,11 @@
     ],
     "outbounds": [
         {
+            "protocol": "freedom",
+            "settings": {},
+            "tag": "DIRECT"
+        },
+        {
             "protocol": "blackhole",
             "settings": {},
             "tag": "BLOCK"
