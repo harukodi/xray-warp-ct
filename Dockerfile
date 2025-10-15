@@ -1,7 +1,7 @@
 # Build caddy with cloudflare plugin
 ARG PYTHON_VERSION=3.13.2-alpine3.21
-ARG CADDY_BUILDER_VERSION=2.9-builder-alpine
-ARG CADDY_SERVER_VERSION=2.9.1-alpine
+ARG CADDY_BUILDER_VERSION=2.10.2-builder-alpine
+ARG CADDY_SERVER_VERSION=2.10.2-alpine
 FROM caddy:${CADDY_BUILDER_VERSION} AS builder
 RUN xcaddy build \
     --with github.com/caddy-dns/cloudflare
