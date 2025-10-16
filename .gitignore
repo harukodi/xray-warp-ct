@@ -168,3 +168,4 @@ wgcf/*
 xray_config/*
 !xray_config/.gitkeep
 !xray_config/xray_core/.gitkeep
+tests/client_config.json
