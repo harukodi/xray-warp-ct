@@ -1,0 +1,9 @@
+services:
+  xray-warp-ct-test-container:
+    image: your-xray-image:latest
+    container_name: xray-warp-ct-test-container
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "443:443"
