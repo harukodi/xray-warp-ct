@@ -9,7 +9,6 @@ on:
 
 jobs:
     build-stage-image:
-        if: github.event.pull_request.head.ref == 'dev'
         uses: ./.github/workflows/build-staging.yaml
         with:
             DOCKERHUB_USERNAME: xia1997x
