@@ -33,7 +33,7 @@ jobs:
           platforms: linux/arm64, linux/amd64
           push: true
           tags: |
-            ${{ vars.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REGISTRY }}:xray-warp-staging
-            ${{ vars.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REGISTRY }}:xray-warp-staging-${{ env.CURRENT_DATE }}
+            ${{ vars.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REGISTRY }}:staging
+            ${{ vars.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REGISTRY }}:staging-${{ env.CURRENT_DATE }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
