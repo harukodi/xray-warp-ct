@@ -1,0 +1,16 @@
+name: xray-warp-ct staging CI/CD
+
+on:
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    build-stage-image:
+        if: github.event.pull_request.head.ref == 'dev'
+        uses: ./.github/workflows/build-staging.yaml.yaml@dev
+        with:
+            DOCKERHUB_USERNAME: xia1997x
+            DOCKERHUB_REGISTRY: xray-warp-staging
+        secrets:
+            DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
