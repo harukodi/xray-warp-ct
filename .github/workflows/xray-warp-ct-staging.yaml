@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-stage-image:
-    uses: ./.github/workflows/actions/build-staging.yaml
+    uses: ./.github/workflows/build-staging.yaml
     with:
       DOCKERHUB_USERNAME: xia1997x
       DOCKERHUB_REGISTRY: xray-warp-staging
@@ -16,7 +16,7 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
   setup-staging-environment:
-    uses: ./.github/workflows/actions/setup-environment-staging.yaml
+    uses: ./.github/workflows/setup-environment-staging.yaml
     with:
       CONFIG_DIRECTORY: ./tests/infrastructure
     secrets:
