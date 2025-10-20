@@ -2,8 +2,10 @@ name: xray-warp-ct staging CI/CD
 
 on:
     pull_request:
+        types:
+            - opened
         branches:
-            - main
+            - "main"
 
 jobs:
     build-stage-image:
