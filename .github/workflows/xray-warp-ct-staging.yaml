@@ -8,7 +8,7 @@ on:
 jobs:
     build-stage-image:
         if: github.event.pull_request.head.ref == 'dev'
-        uses: ./.github/workflows/build-staging.yaml.yaml@dev
+        uses: ./.github/workflows/build-staging.yaml.yaml
         with:
             DOCKERHUB_USERNAME: xia1997x
             DOCKERHUB_REGISTRY: xray-warp-staging
