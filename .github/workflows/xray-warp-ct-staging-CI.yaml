@@ -4,7 +4,7 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
-      - main
+      - dev
 
 jobs:
   build-stage-image:
@@ -14,3 +14,4 @@ jobs:
       DOCKERHUB_REGISTRY: xray-warp-staging
     secrets:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+# test comment
