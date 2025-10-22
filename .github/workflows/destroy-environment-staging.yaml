@@ -14,7 +14,7 @@ env:
   TF_TOKEN_app_terraform_io: "${{ secrets.TF_API_TOKEN }}"
 
 jobs:
-  terraform:
+  terraform-destroy:
     runs-on: ubuntu-latest
     defaults:
       run:

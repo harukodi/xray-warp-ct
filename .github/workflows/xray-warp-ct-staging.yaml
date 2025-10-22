@@ -17,15 +17,13 @@ jobs:
       CONFIG_DIRECTORY: tests/infrastructure
     secrets:
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
-    #needs: [build-staging-image]
+    needs: [build-staging-image]
 
   setup-staging-environment:
     uses: ./.github/workflows/setup-environment-staging.yaml
     with:
-      CONFIG_DIRECTORY: ./tests/infrastructure
+      CONFIG_DIRECTORY: tests/infrastructure
     secrets:
-      TF_CLOUD_ORGANIZATION: ${{ secrets.TF_CLOUD_ORGANIZATION }}
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
-      TF_WORKSPACE: ${{ secrets.TF_WORKSPACE }}
     needs: [build-staging-image, destroy-staging-environment]
 # test workflows
