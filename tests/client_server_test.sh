@@ -64,8 +64,8 @@ function main () {
     for i in $(seq 1 115); do
         test_xray_server_connectivity_func
     done
+    exit 1
 }
 main
-
 ####SOME commands for later use
 #export XRAY_HOST="redacted"; export XRAY_PATH="redacted"; export XRAY_UUID="redacted"

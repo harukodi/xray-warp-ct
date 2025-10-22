@@ -26,4 +26,10 @@ jobs:
     secrets:
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
     needs: [build-staging-image, destroy-staging-environment]
-# test workflows
+
+  check-xray-warp-ct-server-connectivity:
+    uses: ./.github/workflows/xray-warp-ct-connectivity check.yaml
+    with:
+      TESTS_DIRECTORY: tests
+    secrets:
+      XRAY_HOST: ${{ secrets.XRAY_HOST }}
