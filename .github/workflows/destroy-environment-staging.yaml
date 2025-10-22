@@ -16,9 +16,13 @@ env:
 jobs:
   terraform:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ inputs.CONFIG_DIRECTORY }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
       - uses: hashicorp/setup-terraform@v3
-      - run: cd ${{ inputs.CONFIG_DIRECTORY }}
       - run: terraform init
       - id: destroy
         run: terraform destroy --auto-approve
