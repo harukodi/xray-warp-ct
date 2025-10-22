@@ -25,7 +25,7 @@ jobs:
       CONFIG_DIRECTORY: tests/infrastructure
     secrets:
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
-    needs: [build-staging-image, destroy-staging-environment]
+    needs: [build-staging-image, reset-staging-environment]
 
   check-xray-warp-ct-server-connectivity:
     uses: ./.github/workflows/xray-warp-ct-connectivity-check.yaml
