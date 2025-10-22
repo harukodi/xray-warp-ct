@@ -28,4 +28,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Start xray-warp-ct connectivity check
-        run: sh .${{ inputs.CONFIG_DIRECTORY }}/client_server_test.sh
+        run: sh .${{ inputs.TESTS_DIRECTORY }}/client_server_test.sh
