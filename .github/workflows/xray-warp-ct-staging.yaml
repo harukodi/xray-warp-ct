@@ -38,23 +38,20 @@ jobs:
     #needs: [setup-staging-environment]
 
   destroy-staging-environment:
-    if: ${{ !cancelled() }}
-    runs-on: ubuntu-latest
-    env:
+    uses: ./.github/workflows/destroy-environment-staging.yaml
+    with:
+      CONFIG_DIRECTORY: tests/infrastructure
+    secrets:
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+    needs: [check-xray-warp-ct-server-connectivity]
+
+  post-destroy-checks:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: destroy-staging-environment
-        uses: ./.github/workflows/destroy-environment-staging.yaml
-        with:
-          CONFIG_DIRECTORY: tests/infrastructure
       - name: Force fail after failed xray connectivity check
         run: |
-          if [[ "${needs.check-xray-warp-ct-server-connectivity.result}" == "failure" ]]; then
+          if [[ "${{ needs.check-xray-warp-ct-server-connectivity.result }}" == "failure" ]]; then
               echo "❌ Xray connectivity job was not successful."
               exit 1
-          else
-              exit 0
           fi
-    needs: [check-xray-warp-ct-server-connectivity]
+    needs: [check-xray-warp-ct-server-connectivity, destroy-staging-environment]
