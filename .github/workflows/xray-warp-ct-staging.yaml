@@ -1,10 +1,6 @@
 name: xray-warp-ct staging CI/CD
 
-on:
-  pull_request:
-    types: [opened, synchronize, reopened]
-    branches:
-      - dev
+on: workflow_dispatch
 
 jobs:
   build-staging-image:
