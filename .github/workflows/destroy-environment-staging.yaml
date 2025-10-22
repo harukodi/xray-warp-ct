@@ -7,18 +7,11 @@ on:
         required: True
         type: string
     secrets:
-      TF_CLOUD_ORGANIZATION:
-        required: True
       TF_API_TOKEN:
-        required: True
-      TF_WORKSPACE:
         required: True
 
 env:
-  TF_CLOUD_ORGANIZATION: ${{ secrets.TF_CLOUD_ORGANIZATION }}
-  TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
-  TF_WORKSPACE: ${{ secrets.TF_WORKSPACE }}
-  CONFIG_DIRECTORY: ${{ inputs.CONFIG_DIRECTORY }}
+  TF_TOKEN_app_terraform_io: "${{ secrets.TF_API_TOKEN }}"
 
 jobs:
   terraform:
@@ -26,7 +19,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ${{ env.CONFIG_DIRECTORY }}
+        working-directory: ${{ inputs.CONFIG_DIRECTORY }}
     steps:
       - uses: hashicorp/setup-terraform@v3
       - run: terraform init
