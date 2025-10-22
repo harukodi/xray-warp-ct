@@ -11,7 +11,7 @@ jobs:
     secrets:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
-  destroy-staging-environment:
+  reset-staging-environment:
     uses: ./.github/workflows/destroy-environment-staging.yaml
     with:
       CONFIG_DIRECTORY: tests/infrastructure
@@ -36,3 +36,23 @@ jobs:
     secrets:
       XRAY_HOST: ${{ secrets.XRAY_HOST }}
     needs: [setup-staging-environment]
+
+  destroy-staging-environment:
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    env:
+      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+    steps:
+      - name: destroy-staging-environment
+        uses: ./.github/workflows/destroy-environment-staging.yaml
+        with:
+          CONFIG_DIRECTORY: tests/infrastructure
+      - name: Force fail after failed xray connectivity check
+        run: |
+          if [[ "${needs.check-xray-warp-ct-server-connectivity.result}" == "failure" ]]; then
+              echo "❌ Xray connectivity job was not successful."
+              exit 1
+          else
+              exit 0
+          fi
+    needs: [xray-warp-ct-connecivity-check]
