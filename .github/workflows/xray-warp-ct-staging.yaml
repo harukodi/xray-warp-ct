@@ -38,6 +38,7 @@ jobs:
     #needs: [setup-staging-environment]
 
   destroy-staging-environment:
+    if: ${{ !cancelled() }}
     uses: ./.github/workflows/destroy-environment-staging.yaml
     with:
       CONFIG_DIRECTORY: tests/infrastructure
