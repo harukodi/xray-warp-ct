@@ -55,4 +55,4 @@ jobs:
           else
               exit 0
           fi
-    needs: [xray-warp-ct-connecivity-check]
+    needs: [check-xray-warp-ct-server-connectivity]
