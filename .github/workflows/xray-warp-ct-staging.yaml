@@ -16,7 +16,7 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
   destroy-staging-environment:
-    uses: ./.github/workflows/setup-environment-staging.yaml
+    uses: ./.github/workflows/destroy-environment-staging.yaml
     with:
       CONFIG_DIRECTORY: ./tests/infrastructure
     secrets:
