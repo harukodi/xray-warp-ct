@@ -1,6 +1,6 @@
 #!/bin/bash
 # This script is used to test the connectivity of the xray warp ct container
-
+SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 declare -A xray_config_values=(
     ["HOST"]="$XRAY_HOST" 
     ["PATH"]="$XRAY_PATH"
@@ -25,13 +25,13 @@ function fetch_latest_xray_binary_func () {
 }
 
 function copy_config_from_template_func () {
-    cp ./client_config_template.json ./client_config.json
+    cp $SCRIPT_DIR/client_config_template.json $SCRIPT_DIR/client_config.json
 }
 
 function substitute_values_for_xray_client_config_helper_func () {
     local local_key="$1"
     local local_value="$2"
-    sed -i "s/\${$local_key}/$local_value/g" ./client_config.json
+    sed -i "s/\${$local_key}/$local_value/g" $SCRIPT_DIR/client_config.json
 }
 
 function substitute_values_for_xray_client_config_func () {
@@ -42,7 +42,7 @@ function substitute_values_for_xray_client_config_func () {
 }
 
 function test_xray_server_connectivity_func () {
-    local XRAY_CONFIG_FILE="./client_config.json"
+    local XRAY_CONFIG_FILE="$SCRIPT_DIR/client_config.json"
     xray run -c "$XRAY_CONFIG_FILE" 2>&1 >/dev/null &
     local XRAY_PID=$!
     sleep 10
