@@ -35,4 +35,4 @@ jobs:
       XRAY_UUID: eefc8f5f-f2fe-43b5-881c-653994d5a617
     secrets:
       XRAY_HOST: ${{ secrets.XRAY_HOST }}
-    #needs: [setup-staging-environment]
+    needs: [setup-staging-environment]
