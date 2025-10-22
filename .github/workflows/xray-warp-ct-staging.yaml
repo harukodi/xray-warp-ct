@@ -47,6 +47,8 @@ jobs:
         uses: ./.github/workflows/destroy-environment-staging.yaml
         with:
           CONFIG_DIRECTORY: tests/infrastructure
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: Force fail after failed xray connectivity check
         run: |
           if [[ "${needs.check-xray-warp-ct-server-connectivity.result}" == "failure" ]]; then
