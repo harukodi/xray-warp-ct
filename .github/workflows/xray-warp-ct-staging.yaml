@@ -1,4 +1,4 @@
-name: xray-warp-ct staging CI/CD
+name: xray-warp-ct staging CI
 
 on: workflow_dispatch
 
