@@ -33,5 +33,5 @@ jobs:
       TF_CLOUD_ORGANIZATION: ${{ secrets.TF_CLOUD_ORGANIZATION }}
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
       TF_WORKSPACE: ${{ secrets.TF_WORKSPACE }}
-    needs: [build-staging-image]
-# test
+    needs: [build-staging-image, destroy-staging-environment]
+# tes
