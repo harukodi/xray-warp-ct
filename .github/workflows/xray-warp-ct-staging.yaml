@@ -47,6 +47,7 @@ jobs:
     needs: [check-xray-warp-ct-server-connectivity]
 
   post-destroy-checks:
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     steps:
       - name: Force fail after failed xray connectivity check
