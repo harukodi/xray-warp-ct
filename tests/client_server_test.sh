@@ -11,17 +11,18 @@ function install_deps_packages_func () {
     echo "Installing needed deps packages..."
     sudo apt-get update 2>&1 >/dev/null
     sudo apt-get install curl wget jq -y 2>&1 >/dev/null
-    echo "Deps packages are now installed"
+    echo "Deps packages installed"
 }
 
 function fetch_latest_xray_binary_func () {
     local latest_xray_tag=$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | jq -r '[.[] | select(.prerelease == false)][0].tag_name')
     local xray_binary_tmp_path="/tmp"
     local xray_binary_path="/usr/bin"
-    sudo wget -q -O "$xray_binary_tmp_path/xray.zip" --show-progress --progress=bar "https://github.com/XTLS/Xray-core/releases/download/$latest_xray_tag/Xray-linux-64.zip"
+    sudo wget -q -O "$xray_binary_tmp_path/xray.zip" "https://github.com/XTLS/Xray-core/releases/download/$latest_xray_tag/Xray-linux-64.zip" 2>&1 >/dev/null
     sudo unzip -o "$xray_binary_tmp_path/xray.zip" -d "$xray_binary_tmp_path/xray" 2>&1 >/dev/null
     sudo mv "$xray_binary_tmp_path/xray/xray" "$xray_binary_path/xray"
     sudo chmod +x "$xray_binary_path/xray"
+    echo "Xray binary installed"
 }
 
 function copy_config_from_template_func () {
