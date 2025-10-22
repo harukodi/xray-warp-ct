@@ -52,20 +52,21 @@ function test_xray_server_connectivity_func () {
         kill $XRAY_PID
         exit 0
     else
-        kill $XRAY_PID 2>&1 >/dev/null
+        echo "⚠️ Waiting for Xray server to come online..."
+        kill $XRAY_PID 1> /dev/null 2> /dev/null
     fi
 }
 
 function main () {
+    local tries_count=$1
     install_deps_packages_func
     fetch_latest_xray_binary_func
     copy_config_from_template_func
     substitute_values_for_xray_client_config_func
-    for i in $(seq 1 115); do
+    for i in $(seq 1 $tries_count); do
         test_xray_server_connectivity_func
     done
+    echo "❌ Timeout reached: Xray server did not respond in time. Test failed."
     exit 1
 }
-main
-####SOME commands for later use
-#export XRAY_HOST="redacted"; export XRAY_PATH="redacted"; export XRAY_UUID="redacted"
+main 2

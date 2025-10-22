@@ -31,5 +31,7 @@ jobs:
     uses: ./.github/workflows/xray-warp-ct-connectivity check.yaml
     with:
       TESTS_DIRECTORY: tests
+      XRAY_PATH: xray-warp-test-path
+      XRAY_UUID: eefc8f5f-f2fe-43b5-881c-653994d5a617
     secrets:
       XRAY_HOST: ${{ secrets.XRAY_HOST }}
