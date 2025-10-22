@@ -43,12 +43,12 @@ jobs:
     env:
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: destroy-staging-environment
         uses: ./.github/workflows/destroy-environment-staging.yaml
         with:
           CONFIG_DIRECTORY: tests/infrastructure
-      - name: Checkout
-        uses: actions/checkout@v3
       - name: Force fail after failed xray connectivity check
         run: |
           if [[ "${needs.check-xray-warp-ct-server-connectivity.result}" == "failure" ]]; then
