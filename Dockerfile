@@ -16,17 +16,17 @@ EXPOSE 443/tcp
 EXPOSE 443/udp
 COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 WORKDIR /xray_base
-RUN addgroup -S xray_group && adduser -S xray_user -G xray_group
+COPY . /xray_base/
+RUN --mount=type=cache,target=/root/.cache/pip \
+    --mount=type=bind,source=requirements.txt,target=requirements.txt \
+    python -m pip install -r requirements.txt
 RUN mkdir /xray_base/caddy_certs && \
     chmod +x /usr/bin/caddy && \
     apk update && apk add --no-cache libcap && \
     setcap cap_net_bind_service=+ep /usr/bin/caddy && \
+    addgroup -S xray_group && adduser -S xray_user -G xray_group && \
     chown -R xray_user:xray_group /xray_base && \
     chmod -R o+rwx /xray_base/wgcf /xray_base/xray_config/xray_core && \
     rm -rf /var/cache/apk/*
-RUN --mount=type=cache,target=/root/.cache/pip \
-    --mount=type=bind,source=requirements.txt,target=requirements.txt \
-    python -m pip install -r requirements.txt
-COPY . /xray_base/
 USER xray_user
 CMD ["python", "main.py"]
