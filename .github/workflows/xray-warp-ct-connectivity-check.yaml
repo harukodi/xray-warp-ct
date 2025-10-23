@@ -17,7 +17,7 @@ on:
         required: True
 
 env:
-  XRAY_HOST: ${{ secrets.XRAY_HOST }}
+  XRAY_HOST: ${{ secrets.DOMAIN_NAME }}
   XRAY_PATH: ${{ inputs.XRAY_PATH }}
   XRAY_UUID: ${{ inputs.XRAY_UUID }}
 
