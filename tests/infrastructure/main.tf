@@ -20,10 +20,12 @@ variable "region" {}
 variable "domain_name" {
   type      = string
   sensitive = true
+  default   = ""
 }
 variable "cloudflare_token" {
   type      = string
   sensitive = true
+  default   = ""
 }
 
 provider "digitalocean" {
