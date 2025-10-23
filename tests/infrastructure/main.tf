@@ -45,7 +45,8 @@ resource "digitalocean_droplet" "xray-warp-ct-droplet" {
       - docker.io
       - docker-compose
     runcmd:
-      - git clone https://github.com/harukodi/xray-warp-ct.git
+      - [ git, clone, "https://github.com/harukodi/xray-warp-ct.git" ]
+      - [ chmod, "+x", "/xray-warp-ct/tests/infrastructure/xray_server_config/setup-xray-server.sh" ]
       - [ bash, -c, './xray-warp-ct/tests/infrastructure/xray_server_config/setup-xray-server.sh "${var.domain_name}" "xray-warp-test-path" "eefc8f5f-f2fe-43b5-881c-653994d5a617" "${var.cloudflare_token}"' ]
   CLOUDINIT
 }
