@@ -16,7 +16,6 @@ EXPOSE 443/tcp
 EXPOSE 443/udp
 COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 WORKDIR /xray_base
-COPY . /xray_base/
 RUN addgroup -S xray_group && adduser -S xray_user -G xray_group
 RUN mkdir /xray_base/caddy_certs && \
     chmod +x /usr/bin/caddy && \
@@ -28,5 +27,6 @@ RUN mkdir /xray_base/caddy_certs && \
 RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=requirements.txt,target=requirements.txt \
     python -m pip install -r requirements.txt
+COPY . /xray_base/
 USER xray_user
 CMD ["python", "main.py"]
