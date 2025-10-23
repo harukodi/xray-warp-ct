@@ -171,3 +171,4 @@ xray_config/*
 tests/client_config.json
 .terraform
 .terraform.*
+.public.env

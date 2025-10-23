@@ -17,11 +17,14 @@ variable "do_token" {}
 variable "droplet_size" {}
 variable "droplet_image" {}
 variable "region" {}
-variable "hostname" {
-  type    = string
-  default = "test"
+variable "domain_name" {
+  type      = string
+  sensitive = true
 }
-
+variable "cloudflare_token" {
+  type      = string
+  sensitive = true
+}
 
 provider "digitalocean" {
   token = var.do_token
@@ -39,5 +42,8 @@ resource "digitalocean_droplet" "xray-warp-ct-droplet" {
       - git
       - docker.io
       - docker-compose
+    runcmd:
+      - git clone https://github.com/harukodi/xray-warp-ct.git
+      - cd xray-warp-ct/tests/infrastructure/xray_server_config/ && bash ./setup-xray-server.sh "${var.domain_name}" "xray-warp-test-path" "eefc8f5f-f2fe-43b5-881c-653994d5a617" "${var.cloudflare_token}"
   CLOUDINIT
 }

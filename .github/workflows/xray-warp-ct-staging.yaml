@@ -24,6 +24,9 @@ jobs:
       CONFIG_DIRECTORY: tests/infrastructure
     secrets:
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+      DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
+      CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
+
     needs: [build-staging-image, reset-staging-environment]
 
   check-xray-warp-ct-server-connectivity:
