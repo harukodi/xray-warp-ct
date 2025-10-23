@@ -10,9 +10,9 @@ on:
       TF_API_TOKEN:
         required: False
       DOMAIN_NAME:
-        required: true
+        required: false
       CLOUDFLARE_TOKEN:
-        required: true
+        required: false
 
 env:
   TF_TOKEN_app_terraform_io: "${{ secrets.TF_API_TOKEN }}"
