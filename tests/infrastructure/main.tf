@@ -40,10 +40,6 @@ resource "digitalocean_droplet" "xray-warp-ct-droplet" {
   size      = var.droplet_size
   user_data = <<-CLOUDINIT
     #cloud-config
-    packages:
-      - git
-      - docker.io
-      - docker-compose
     runcmd:
       - [ git, clone, "https://github.com/harukodi/xray-warp-ct.git" ]
       - [ chmod, "+x", "/xray-warp-ct/tests/infrastructure/xray_server_config/setup-xray-server.sh" ]
