@@ -8,6 +8,23 @@ declare -A xray_config_values=(
     ["CLOUDFLARE_AUTH_TOKEN"]="$4"
 )
 
+function install_docker_tools () {
+    # Add Docker's official GPG key
+    sudo apt-get update
+    sudo apt-get install ca-certificates curl
+    sudo install -m 0755 -d /etc/apt/keyrings
+    sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+    sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+    # Add the repository to Apt sources
+    echo \
+      "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+      $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+      sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    sudo apt-get update
+    sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+}
+
 function copy_config_from_template_func () {
     cp $SCRIPT_DIR/template.public.env $SCRIPT_DIR/.public.env
 }
@@ -26,10 +43,11 @@ function substitute_values_for_xray_env_file_func () {
 }
 
 function start_xray_warp_container_func () {
-    docker-compose -f $SCRIPT_DIR/docker-compose.yaml up -d
+    docker compose -f $SCRIPT_DIR/docker-compose.yaml up -d
 }
 
 function main () {
+    install_docker_tools
     copy_config_from_template_func
     substitute_values_for_xray_env_file_func
     start_xray_warp_container_func
