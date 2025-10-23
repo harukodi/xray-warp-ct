@@ -26,8 +26,7 @@ jobs:
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
       DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
       CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
-    #build-staging-image also needs this after testing
-    needs: [reset-staging-environment]
+    needs: [build-staging-image, reset-staging-environment]
 
   check-xray-warp-ct-server-connectivity:
     uses: ./.github/workflows/xray-warp-ct-connectivity-check.yaml
