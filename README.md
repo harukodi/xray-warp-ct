@@ -8,11 +8,11 @@
 
 ## Create docker-compose file and the needed folders
 ```bash
-mkdir xray-warp && \
-cd xray-warp && \
-mkdir certs && \
-mkdir -p config/{caddy_config,xray_config} && \
+mkdir xray-warp-ct && \
+cd xray-warp-ct && \
+mkdir -p config/{certs,caddy_config,xray_config/xray_core} && \
 touch docker-compose.yaml
+touch .env
 ```
 
 ## Docker-compose file example
@@ -22,19 +22,14 @@ services:
     image: xia1997x/xray-warp:latest
     container_name: xray-warp-ct
     user: 1000:1000
+    env_file:
+      - .public.env
     ports:
       - '443:443'
-    environment:
-      - DOMAIN_NAME=subdomain.domain.tld
-      - PORT=443
-      - XRAY_VERSION=latest
-      - WGCF_VERSION=2.2.24
-      - CLOUDFLARE_AUTH_TOKEN=
-      - ENABLE_CADDY_LOG=False
-      - ENABLE_IPV6=False
     volumes:
-      - ./certs:/xray_base/caddy_certs
+      - ./config/certs:/xray_base/caddy_certs
       - ./config/xray_config:/xray_base/xray_config
+      - ./config/xray_config/xray_core:/xray_base/xray_config/xray_core
       - ./config/caddy_config:/xray_base/caddy_config
 ```
 
@@ -76,11 +71,13 @@ services:
 
 ## File tree
 ```
-📦xray-ct-test  
- ┣ 📂certs  
- ┣ 📂config  
- ┃ ┣ 📂caddy_config  
- ┃ ┗ 📂xray_config  
+📦xray-warp-ct
+ ┣ 📂config
+ ┃ ┣ 📂caddy_config
+ ┃ ┣ 📂certs
+ ┃ ┗ 📂xray_config
+ ┃ ┃ ┗ 📂xray_core
+ ┣ 📜.env
  ┗ 📜docker-compose.yaml
 ```
 
