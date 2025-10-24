@@ -1,6 +1,6 @@
 import atexit, signal, sys
 from os import path
-from create_cf_dns_record import create_cf_dns_record
+from setup_cf_dns_record import setup_dns_record
 from setup_xray_core import setup_xray_core
 from setup_wgcf import setup_wgcf
 from generate_wgcf_profile import generate_wgcf_profile_and_register
@@ -23,7 +23,7 @@ def start_services():
     caddy_process = start_caddy_server()
 
 def initialize():
-    create_cf_dns_record()
+    setup_dns_record()
     setup_wgcf()
     setup_xray_core()
     generate_wgcf_profile_and_register()

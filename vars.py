@@ -1,10 +1,10 @@
 import uuid, string, random
 from os import environ
 from dotenv import load_dotenv
-
 load_dotenv(override=True)
-xray_uuid = str(uuid.uuid4())
-xray_path = ''.join(random.choices(string.ascii_uppercase + string.ascii_lowercase, k=38))
+
+xray_uuid = environ.get("XRAY_UUID", str(uuid.uuid4()))
+xray_path = environ.get("XRAY_PATH", ''.join(random.choices(string.ascii_uppercase + string.ascii_lowercase, k=38)))
 domain_name = environ.get("DOMAIN_NAME")
 port = environ.get("PORT", "443")
 fingerprint = environ.get("FINGERPRINT", "chrome")
