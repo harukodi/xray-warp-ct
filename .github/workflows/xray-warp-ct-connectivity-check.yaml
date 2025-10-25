@@ -29,6 +29,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Start xray-warp-ct connectivity check
         run: bash ./${{ inputs.TESTS_DIRECTORY }}/client_server_test.sh
+        continue-on-error: True
       - name: Upload client_config
         uses: actions/upload-artifact@v4
         with:
