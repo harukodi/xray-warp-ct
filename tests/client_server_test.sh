@@ -45,11 +45,12 @@ function substitute_values_for_xray_client_config_func () {
 function test_xray_server_connectivity_func () {
     local COUNT=$1
     local XRAY_CONFIG_FILE="$SCRIPT_DIR/client_config.json"
-    xray run -c "$XRAY_CONFIG_FILE"
+    xray run -c "$XRAY_CONFIG_FILE" 2>&1 >/dev/null &
     local XRAY_PID=$!
     for i in $(seq 1 $COUNT); do
         sleep 10
         local RESPONSE=$(curl -w "%{http_code}" -o /dev/null -s --socks5 localhost:10809 -L https://google.com)
+        echo $RESPONSE
         if [[ "$RESPONSE" != "000" ]]; then
             echo "✅ Request succeeded xray server was reachable, status: $RESPONSE"
             kill $XRAY_PID
