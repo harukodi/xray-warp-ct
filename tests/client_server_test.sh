@@ -43,30 +43,31 @@ function substitute_values_for_xray_client_config_func () {
 }
 
 function test_xray_server_connectivity_func () {
+    local COUNT=$1
     local XRAY_CONFIG_FILE="$SCRIPT_DIR/client_config.json"
     xray run -c "$XRAY_CONFIG_FILE" 2>&1 >/dev/null &
     local XRAY_PID=$!
-    sleep 10
-    local RESPONSE=$(echo "$(curl -w "%{http_code}" -o /dev/null -s --socks5 localhost:10809 -L https://google.com)")
-    if [[ "$RESPONSE" == "200" ]]; then
-        echo "✅ Request succeeded xray server was reachable, status: $RESPONSE"
-        kill $XRAY_PID
-        exit 0
-    else
-        echo "⚠️ Waiting for Xray server to come online..."
-        kill $XRAY_PID 1> /dev/null 2> /dev/null
-    fi
+    for i in $(seq 1 $COUNT); do
+        sleep 10
+        local RESPONSE=$(curl -w "%{http_code}" -o /dev/null -s --socks5 localhost:10809 -L https://google.com)
+        if [[ "$RESPONSE" != "000" ]]; then
+            echo "✅ Request succeeded xray server was reachable, status: $RESPONSE"
+            kill $XRAY_PID
+            exit 0
+        else
+            echo "⚠️ Waiting for Xray server to come online..."
+        fi
+    done
+    kill $XRAY_PID
 }
 
 function main () {
-    local tries_count=$1
+    local TRIES_COUNT=$1
     install_deps_packages_func
     fetch_latest_xray_binary_func
     copy_config_from_template_func
     substitute_values_for_xray_client_config_func
-    for i in $(seq 1 $tries_count); do
-        test_xray_server_connectivity_func
-    done
+    test_xray_server_connectivity_func $TRIES_COUNT
     echo "❌ Timeout reached: Xray server did not respond in time. Test failed."
     exit 1
 }

@@ -5,6 +5,7 @@ files_to_remove=(
     "xray_config/xray_client_qr_code.png"
     "xray_config/xray_core/*"
     "wgcf/*"
+    "tests/client_config.json"
 )
 
 function remove_file () {
