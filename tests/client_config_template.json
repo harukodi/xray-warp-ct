@@ -6,7 +6,7 @@
         {
             "tag": "socks",
             "port": 10809,
-            "listen": "127.0.0.1",
+            "listen": "0.0.0.0",
             "protocol": "mixed",
             "sniffing": {
                 "enabled": true,
