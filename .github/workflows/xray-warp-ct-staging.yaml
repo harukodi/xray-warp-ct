@@ -3,30 +3,30 @@ name: xray-warp-ct staging CI
 on: workflow_dispatch
 
 jobs:
-  #build-staging-image:
-  #  uses: ./.github/workflows/build-staging.yaml
-  #  with:
-  #    DOCKERHUB_USERNAME: xia1997x
-  #    DOCKERHUB_REGISTRY: xray-warp-staging
-  #  secrets:
-  #    DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+  build-staging-image:
+    uses: ./.github/workflows/build-staging.yaml
+    with:
+      DOCKERHUB_USERNAME: xia1997x
+      DOCKERHUB_REGISTRY: xray-warp-staging
+    secrets:
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
-  #reset-staging-environment:
-  #  uses: ./.github/workflows/destroy-environment-staging.yaml
-  #  with:
-  #    CONFIG_DIRECTORY: tests/infrastructure
-  #  secrets:
-  #    TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+  reset-staging-environment:
+    uses: ./.github/workflows/destroy-environment-staging.yaml
+    with:
+      CONFIG_DIRECTORY: tests/infrastructure
+    secrets:
+      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
 
-  #setup-staging-environment:
-  #  uses: ./.github/workflows/setup-environment-staging.yaml
-  #  with:
-  #    CONFIG_DIRECTORY: tests/infrastructure
-  #  secrets:
-  #    TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
-  #    DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
-  #    CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
-  #  needs: [build-staging-image, reset-staging-environment]
+  setup-staging-environment:
+    uses: ./.github/workflows/setup-environment-staging.yaml
+    with:
+      CONFIG_DIRECTORY: tests/infrastructure
+    secrets:
+      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+      DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
+      CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
+    needs: [build-staging-image, reset-staging-environment]
 
   check-xray-warp-ct-server-connectivity:
     uses: ./.github/workflows/xray-warp-ct-connectivity-check.yaml
@@ -36,27 +36,27 @@ jobs:
       XRAY_UUID: eefc8f5f-f2fe-43b5-881c-653994d5a617
     secrets:
       XRAY_HOST: ${{ secrets.DOMAIN_NAME }}
-    #needs: [setup-staging-environment]
+    needs: [setup-staging-environment]
 
-  #destroy-staging-environment:
-  #  if: ${{ !cancelled() }} # Always run the job if not cancelled manually in the UI
-  #  uses: ./.github/workflows/destroy-environment-staging.yaml
-  #  with:
-  #    CONFIG_DIRECTORY: tests/infrastructure
-  #  secrets:
-  #    TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
-  #  needs: [check-xray-warp-ct-server-connectivity]
+  destroy-staging-environment:
+    if: ${{ !cancelled() }} # Always run the job if not cancelled manually in the UI
+    uses: ./.github/workflows/destroy-environment-staging.yaml
+    with:
+      CONFIG_DIRECTORY: tests/infrastructure
+    secrets:
+      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+    needs: [check-xray-warp-ct-server-connectivity]
 
-  #post-checks:
-  #  if: ${{ !cancelled() }} # Always run the job if not cancelled manually in the UI
-  #  runs-on: ubuntu-latest
-  #  steps:
-  #    - name: Force fail after failed xray connectivity check
-  #      run: |
-  #        if [[ "${{ needs.check-xray-warp-ct-server-connectivity.result }}" == "failure" ]]; then
-  #          echo "❌ xray-warp-ct staging CI workflow was not completed successfully!"
-  #          exit 1
-  #        else
-  #          echo "✅ xray-warp-ct staging CI workflow completed successfully!"
-  #        fi
-  #  needs: [check-xray-warp-ct-server-connectivity, destroy-staging-environment]
+  post-checks:
+    if: ${{ !cancelled() }} # Always run the job if not cancelled manually in the UI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Force fail after failed xray connectivity check
+        run: |
+          if [[ "${{ needs.check-xray-warp-ct-server-connectivity.result }}" == "failure" ]]; then
+            echo "❌ xray-warp-ct staging CI workflow was not completed successfully!"
+            exit 1
+          else
+            echo "✅ xray-warp-ct staging CI workflow completed successfully!"
+          fi
+    needs: [check-xray-warp-ct-server-connectivity, destroy-staging-environment]
