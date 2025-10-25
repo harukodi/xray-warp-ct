@@ -7,7 +7,7 @@
             "tag": "socks",
             "port": 10809,
             "listen": "127.0.0.1",
-            "protocol": "mixed",
+            "protocol": "socks",
             "sniffing": {
                 "enabled": true,
                 "destOverride": [

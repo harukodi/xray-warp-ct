@@ -45,7 +45,7 @@ function substitute_values_for_xray_client_config_func () {
 function test_xray_server_connectivity_func () {
     local COUNT=$1
     local XRAY_CONFIG_FILE="$SCRIPT_DIR/client_config.json"
-    exec xray run -c "$XRAY_CONFIG_FILE" 2>&1 >/dev/null &
+    xray run -c "$XRAY_CONFIG_FILE" 2>&1 >/dev/null &
     local XRAY_PID=$!
     for i in $(seq 1 $COUNT); do
         sleep 10
