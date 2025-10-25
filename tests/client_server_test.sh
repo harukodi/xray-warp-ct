@@ -49,14 +49,13 @@ function test_xray_server_connectivity_func () {
     local XRAY_PID=$!
     for i in $(seq 1 $COUNT); do
         sleep 10
-        local RESPONSE=$(curl -w "%{http_code}" -o /dev/null -s --socks5 localhost:10809 -L https://google.com)
-        echo $RESPONSE
+        local RESPONSE=$(curl -w "%{http_code}" -o /dev/null -s --socks5 127.0.0.1:10809 -L https://google.com)
         if [[ "$RESPONSE" != "000" ]]; then
             echo "✅ Request succeeded xray server was reachable, status: $RESPONSE"
             kill $XRAY_PID
             exit 0
         else
-            echo "⚠️ Waiting for Xray server to come online..."
+            echo "⚠️ Waiting for Xray server to come online, status: $RESPONSE"
         fi
     done
     kill $XRAY_PID
