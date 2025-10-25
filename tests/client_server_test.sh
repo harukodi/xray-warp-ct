@@ -1,11 +1,23 @@
 #!/bin/bash
 # This script is used to test the connectivity of the xray warp ct container
 SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
+environment_variables=(
+    XRAY_HOST
+    XRAY_PATH
+    XRAY_UUID
+)
 declare -A xray_config_values=(
     ["HOST"]="$XRAY_HOST" 
     ["PATH"]="$XRAY_PATH"
     ["UUID"]="$XRAY_UUID"
 )
+
+for var in "${environment_variables[@]}"; do
+    if [[ -z "${!var}" ]]; then
+        echo "❌ Missing environment variable: $var"
+        exit 1
+    fi
+done
 
 function install_deps_packages_func () {
     echo "Installing needed deps packages..."
@@ -71,10 +83,4 @@ function main () {
     echo "❌ Timeout reached: Xray server did not respond in time. Test failed."
     exit 1
 }
-for var in XRAY_HOST XRAY_PATH XRAY_UUID; do
-    if [[ -z "${!var}" ]]; then
-        echo "❌ Missing environment variable: $var"
-        exit 1
-    fi
-done
 main 2
