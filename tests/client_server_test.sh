@@ -27,13 +27,13 @@ function install_deps_packages_func () {
 }
 
 function fetch_latest_xray_binary_func () {
-    local latest_xray_tag=$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | jq -r '[.[] | select(.prerelease == false)][0].tag_name')
-    local xray_binary_tmp_path="/tmp"
-    local xray_binary_path="/usr/bin"
-    sudo wget -q -O "$xray_binary_tmp_path/xray.zip" "https://github.com/XTLS/Xray-core/releases/download/$latest_xray_tag/Xray-linux-64.zip" 2>&1 >/dev/null
-    sudo unzip -o "$xray_binary_tmp_path/xray.zip" -d "$xray_binary_tmp_path/xray" 2>&1 >/dev/null
-    sudo mv "$xray_binary_tmp_path/xray/xray" "$xray_binary_path/xray"
-    sudo chmod +x "$xray_binary_path/xray"
+    local LATEST_XRAY_TAG=$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | jq -r '[.[] | select(.prerelease == false)][0].tag_name')
+    local XRAY_BINARY_TMP_PATH="/tmp"
+    local XRAY_BINARY_PATH="/usr/bin"
+    sudo wget -q -O "$XRAY_BINARY_TMP_PATH/xray.zip" "https://github.com/XTLS/Xray-core/releases/download/$LATEST_XRAY_TAG/Xray-linux-64.zip" 2>&1 >/dev/null
+    sudo unzip -o "$XRAY_BINARY_TMP_PATH/xray.zip" -d "$XRAY_BINARY_TMP_PATH/xray" 2>&1 >/dev/null
+    sudo mv "$XRAY_BINARY_TMP_PATH/xray/xray" "$XRAY_BINARY_PATH/xray"
+    sudo chmod +x "$XRAY_BINARY_PATH/xray"
     echo "Xray binary installed"
 }
 
@@ -83,4 +83,4 @@ function main () {
     echo "❌ Timeout reached: Xray server did not respond in time. Test failed."
     exit 1
 }
-main 100
+main 90
