@@ -28,6 +28,7 @@ function obtain_tls_cert () {
         echo "✅ Successfully obtained TLS certificate"
     else
         echo "❌ Failed to obtain TLS certificate"
+        exit 1
     fi
 }
 
