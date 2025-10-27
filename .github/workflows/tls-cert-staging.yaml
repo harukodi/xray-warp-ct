@@ -22,8 +22,8 @@ jobs:
         run: ./helpers_scripts/obtain-cert.sh
       - name: Allow read on tls cert and key
         run: |
-          chmod +r /var/snap/lego/common/.lego/certificates/${{ secrets.DOMAIN_NAME }}.crt
-          chmod +r /var/snap/lego/common/.lego/certificates/${{ secrets.DOMAIN_NAME }}.key
+          sudo chmod +r /var/snap/lego/common/.lego/certificates/${{ secrets.DOMAIN_NAME }}.crt
+          sudo chmod +r /var/snap/lego/common/.lego/certificates/${{ secrets.DOMAIN_NAME }}.key
       - name: upload tls cert and key
         uses: actions/upload-artifact@v4
         with:
