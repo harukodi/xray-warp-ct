@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: "Create tls certificate"
+      - name: "Create tls cert and key"
         run: |
           ./helpers_scripts/obtain-cert.sh
           mkdir -p $GITHUB_WORKSPACE/certs
