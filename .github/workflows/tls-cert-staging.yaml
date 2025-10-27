@@ -8,7 +8,7 @@ on: workflow_dispatch
 env:
   CLOUDFLARE_DNS_API_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
   DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
-  ACME_ACCOUNT: ${{ secrets.ACME_ACCOUNT }}
+  ACME_ACCOUNT: ${{ secrets.ACME_ACCOUNT }}ok
 
 jobs:
   obtain-tls-certificate:
@@ -27,5 +27,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: tls-cert-and-key-artifact
-          path: |
-            certs/*
+          path: certs/*
