@@ -12,7 +12,7 @@ for var in "${environment_variables[@]}"; do
 done
 
 function install_lego_acme_client() {
-    sudo snap install lego >/dev/null 2>&1
+    sudo snap install lego #>/dev/null 2>&1
 }
 
 function obtain_tls_cert () {
