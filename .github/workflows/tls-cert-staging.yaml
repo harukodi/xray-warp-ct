@@ -1,0 +1,20 @@
+#on:
+#  schedule:
+#    - cron: "0 22 * * 4"
+on: workflow_dispatch
+
+env:
+  CLOUDFLARE_DNS_API_TOKEN: ${ secrets.CLOUDFLARE_TOKEN }
+  DOMAIN_NAME: ${ secrets.DOMAIN_NAME }
+  ACME_ACCOUNT: ${ secrets.ACME_ACCOUNT }
+
+jobs:
+  obtain-tls-certificate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: "chmod obtain-cert.sh script"
+        run: chmod +x ./helpers_scripts/obtain-cert.sh
+      - name: "Create tls certificate"
+        run: ./helpers_scripts/obtain-cert.sh
