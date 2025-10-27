@@ -21,13 +21,12 @@ jobs:
       - name: Copy TLS cert and key to workspace
         run: |
           mkdir -p $GITHUB_WORKSPACE/certs
-          sudo cp /var/snap/lego/common/.lego/certificates/${{ secrets.DOMAIN_NAME }}.crt $GITHUB_WORKSPACE/certs 
-          sudo cp /var/snap/lego/common/.lego/certificates/${{ secrets.DOMAIN_NAME }}.key $GITHUB_WORKSPACE/certs
+          sudo cp /var/snap/lego/common/.lego/certificates/${{ secrets.DOMAIN_NAME }}.crt $GITHUB_WORKSPACE/certs/ 
+          sudo cp /var/snap/lego/common/.lego/certificates/${{ secrets.DOMAIN_NAME }}.key $GITHUB_WORKSPACE/certs/
           sudo chown $USER:$USER $GITHUB_WORKSPACE/certs/*
       - name: upload tls cert and key
         uses: actions/upload-artifact@v4
         with:
           name: tls-cert-and-key-artifact
           path: |
-            $GITHUB_WORKSPACE/certs/${{ secrets.DOMAIN_NAME }}.crt
-            $GITHUB_WORKSPACE/certs/${{ secrets.DOMAIN_NAME }}.key
+            $GITHUB_WORKSPACE/certs/*
