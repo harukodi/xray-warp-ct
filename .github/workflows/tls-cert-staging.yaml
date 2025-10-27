@@ -28,4 +28,4 @@ jobs:
         with:
           name: tls-cert-and-key-artifact
           path: |
-            $GITHUB_WORKSPACE/certs
+            certs/*
