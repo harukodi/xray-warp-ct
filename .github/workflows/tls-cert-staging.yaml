@@ -29,4 +29,5 @@ jobs:
         with:
           name: tls-cert-and-key-artifact
           path: |
-            $GITHUB_WORKSPACE/certs/*
+            $GITHUB_WORKSPACE/certs/${{ secrets.DOMAIN_NAME }}.crt
+            $GITHUB_WORKSPACE/certs/${{ secrets.DOMAIN_NAME }}.key
