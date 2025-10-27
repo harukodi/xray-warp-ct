@@ -13,6 +13,8 @@ on:
         required: true
       CLOUDFLARE_TOKEN:
         required: true
+      GITHUB_TOKEN:
+        required: false
 
 jobs:
   base64-encode-tls-cert-and-key:
@@ -28,6 +30,8 @@ jobs:
         with:
           name: tls-cert-and-key-artifact
           path: certs
+          run-id: get-tls-cert-and-key
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: base64 enocde tls_cert and tls_key
         id: tls_cert_and_key_base64_encoded
         run: |
