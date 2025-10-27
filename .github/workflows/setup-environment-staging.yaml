@@ -39,8 +39,8 @@ jobs:
       TF_TOKEN_app_terraform_io: "${{ secrets.TF_API_TOKEN }}"
       TF_VAR_domain_name: "${{ secrets.DOMAIN_NAME }}"
       TF_VAR_cloudflare_token: "${{ secrets.CLOUDFLARE_TOKEN }}"
-      TF_VAR_tls_cert_base64: ${{ needs.base64-encode-tls-cert-and-key.outputs.tls_cert_base64_output }}
-      TF_VAR_tls_key_base64: ${{ needs.base64-encode-tls-cert-and-key.outputs.tls_key_base64_output }}
+      TF_VAR_tls_cert_base64: ${{needs.base64-encode-tls-cert-and-key.outputs.tls_cert_base64_output}}
+      TF_VAR_tls_key_base64: ${{needs.base64-encode-tls-cert-and-key.outputs.tls_key_base64_output}}
     defaults:
       run:
         working-directory: ${{ inputs.CONFIG_DIRECTORY }}
