@@ -1,12 +1,14 @@
+name:
 #on:
 #  schedule:
 #    - cron: "0 22 * * 4"
+
 on: workflow_dispatch
 
 env:
-  CLOUDFLARE_DNS_API_TOKEN: ${ secrets.CLOUDFLARE_TOKEN }
-  DOMAIN_NAME: ${ secrets.DOMAIN_NAME }
-  ACME_ACCOUNT: ${ secrets.ACME_ACCOUNT }
+  CLOUDFLARE_DNS_API_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
+  DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
+  ACME_ACCOUNT: ${{ secrets.ACME_ACCOUNT }}
 
 jobs:
   obtain-tls-certificate:
