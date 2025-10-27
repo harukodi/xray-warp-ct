@@ -20,7 +20,7 @@ function obtain_tls_cert () {
         --server=https://acme-staging-v02.api.letsencrypt.org/directory \
         --dns cloudflare \
         --domains="$DOMAIN_NAME" \
-        --email="$ACME_ACCOUNT" \
+        --email="githubruner@github.com" \
         --accept-tos \
         run #>/dev/null 2>&1
 
