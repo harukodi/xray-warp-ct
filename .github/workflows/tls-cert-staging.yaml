@@ -18,14 +18,15 @@ jobs:
         uses: actions/checkout@v3
       - name: "Create tls certificate"
         run: ./helpers_scripts/obtain-cert.sh
-      - name: Allow read on tls cert and key
+      - name: Copy TLS cert and key to workspace
         run: |
-          sudo chmod +r /var/snap/lego/common/.lego/certificates/${{ secrets.DOMAIN_NAME }}.crt
-          sudo chmod +r /var/snap/lego/common/.lego/certificates/${{ secrets.DOMAIN_NAME }}.key
+          mkdir -p $GITHUB_WORKSPACE/certs
+          sudo cp /var/snap/lego/common/.lego/certificates/${{ secrets.DOMAIN_NAME }}.crt > $GITHUB_WORKSPACE/certs 
+          sudo cp /var/snap/lego/common/.lego/certificates/${{ secrets.DOMAIN_NAME }}.key > $GITHUB_WORKSPACE/certs
+          sudo chown $USER:$USER $GITHUB_WORKSPACE/certs/*
       - name: upload tls cert and key
         uses: actions/upload-artifact@v4
         with:
           name: tls-cert-and-key-artifact
           path: |
-            /var/snap/lego/common/.lego/certificates/${{ secrets.DOMAIN_NAME }}.crt
-            /var/snap/lego/common/.lego/certificates/${{ secrets.DOMAIN_NAME }}.key
+            $GITHUB_WORKSPACE/certs/*
