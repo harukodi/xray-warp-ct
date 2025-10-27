@@ -1,4 +1,4 @@
-name:
+name: obtain-tls-certificate
 #on:
 #  schedule:
 #    - cron: "0 22 * * 4"
@@ -20,3 +20,10 @@ jobs:
         run: chmod +x ./helpers_scripts/obtain-cert.sh
       - name: "Create tls certificate"
         run: ./helpers_scripts/obtain-cert.sh
+      - name: upload tls cert and key
+        uses: actions/upload-artifact@v4
+        with:
+          name: tls-cert-and-key-artifact
+          path: |
+            /var/snap/lego/common/.lego/certificates/${{ secrets.DOMAIN_NAME }}.crt
+            /var/snap/lego/common/.lego/certificates/${{ secrets.DOMAIN_NAME }}.crt
