@@ -22,7 +22,7 @@ function obtain_tls_cert () {
         --domains="$DOMAIN_NAME" \
         --email="$ACME_ACCOUNT" \
         --accept-tos \
-        run >/dev/null 2>&1
+        run #>/dev/null 2>&1
 
     if [[ $? -eq 0 ]];then
         echo "✅ Successfully obtained TLS certificate"
