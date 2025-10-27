@@ -20,6 +20,7 @@ jobs:
         run: ./helpers_scripts/obtain-cert.sh
       - name: Copy TLS cert and key to workspace
         run: |
+          mkdir -p $GITHUB_WORKSPACE/certs
           sudo cp /var/snap/lego/common/.lego/certificates/${{ secrets.DOMAIN_NAME }}.crt $GITHUB_WORKSPACE/certs 
           sudo cp /var/snap/lego/common/.lego/certificates/${{ secrets.DOMAIN_NAME }}.key $GITHUB_WORKSPACE/certs
           sudo chown $USER:$USER $GITHUB_WORKSPACE/certs/*
