@@ -27,6 +27,7 @@ jobs:
         uses: actions/download-artifact@v5
         with:
           name: tls-cert-and-key-artifact
+          path: certs
       - name: base64 enocde tls_cert and tls_key
         id: tls_cert_and_key_base64_encoded
         run: |
