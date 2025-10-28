@@ -17,7 +17,7 @@ function install_lego_acme_client() {
 
 function obtain_tls_cert () {
     sudo --preserve-env lego \
-        --server=https://acme-staging-v02.api.letsencrypt.org/directory \
+        --server=https://acme-v02.api.letsencrypt.org/directory \
         --dns cloudflare \
         --domains="$DOMAIN_NAME" \
         --email="$ACME_ACCOUNT" \
