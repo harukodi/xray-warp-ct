@@ -13,8 +13,8 @@ declare -A xray_config_values=(
 function create_docker_tls_volume_bind_and_bind_tls_cert_and_key_func () {
     local CERT_DIR="$SCRIPT_DIR/config/certs/caddy/certificates/acme-v02.api.letsencrypt.org-directory/${xray_config_values["DOMAIN_NAME"]}/"
     mkdir -p "$CERT_DIR"
-    echo "$TLS_CERT_BASE64" | base64 -d > "$CERT_DIR/${xray_config_values["DOMAIN_NAME"]}.crt"
-    echo "$TLS_KEY_BASE64" | base64 -d > "$CERT_DIR/${xray_config_values["DOMAIN_NAME"]}.key"
+    echo "${xray_config_values["TLS_CERT_BASE64"]}" | base64 -d > "$CERT_DIR/${xray_config_values["DOMAIN_NAME"]}.crt"
+    echo "${xray_config_values["TLS_KEY_BASE64"]}" | base64 -d > "$CERT_DIR/${xray_config_values["DOMAIN_NAME"]}.key"
 }
 
 function install_docker_tools () {
