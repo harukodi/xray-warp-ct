@@ -1,9 +1,8 @@
 name: obtain-tls-certificate
-#on:
-#  schedule:
-#    - cron: "0 22 * * 4"
-
-on: workflow_dispatch
+on:
+  schedule:
+    - cron: "0 22 * * 4"
+  workflow_dispatch:
 
 env:
   CLOUDFLARE_DNS_API_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
