@@ -1,3 +1,4 @@
+import os
 from vars import domain_name, xray_path
 from string import Template
 
@@ -13,5 +14,8 @@ def generate_caddy_config():
     caddyfile_filled = Template(caddyfile).substitute(caddyfile_substitute_values)
 
     caddy_config = "./caddy_config/Caddyfile"
-    with open(caddy_config, 'w') as file:
-        file.write(caddyfile_filled)
+    if os.path.exists(caddy_config):
+        return
+    else:
+        with open(caddy_config, 'w') as file:
+            file.write(caddyfile_filled)
