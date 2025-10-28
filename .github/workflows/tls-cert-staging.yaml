@@ -24,7 +24,5 @@ jobs:
           sudo cp /var/snap/lego/common/.lego/certificates/$DOMAIN_NAME.crt $GITHUB_WORKSPACE/certs/$DOMAIN_NAME.crt
           sudo cp /var/snap/lego/common/.lego/certificates/$DOMAIN_NAME.key $GITHUB_WORKSPACE/certs/$DOMAIN_NAME.key
           sudo chown $USER:$USER $GITHUB_WORKSPACE/certs/*
-          unset GITHUB_TOKEN
-          gh auth login --with-token
           gh secret set TLS_CERT_BASE64 --body "$(base64 -w0 $GITHUB_WORKSPACE/certs/$DOMAIN_NAME.crt)"
           gh secret set TLS_KEY_BASE64 --body "$(base64 -w0 $GITHUB_WORKSPACE/certs/$DOMAIN_NAME.key)"
