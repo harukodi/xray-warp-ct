@@ -59,6 +59,7 @@ function test_xray_server_connectivity_func () {
     local XRAY_CONFIG_FILE="$SCRIPT_DIR/client_config.json"
     for i in $(seq 1 $COUNT); do
         xray run -c "$XRAY_CONFIG_FILE" 2>&1 >/dev/null &
+        ps aux | grep xray
         local XRAY_PID=$!
         sleep 10
         local RESPONSE=$(curl -w "%{http_code}" -o /dev/null -s --socks5-hostname 127.0.0.1:10809 -L https://google.com)
@@ -70,7 +71,6 @@ function test_xray_server_connectivity_func () {
             echo "⚠️ Waiting for Xray server to come online, status: $RESPONSE"
             kill $XRAY_PID
         fi
-        ps aux | grep xray
     done
 }
 
