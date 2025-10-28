@@ -3,32 +3,32 @@ name: xray-warp-ct staging CI
 on: workflow_dispatch
 
 jobs:
-  #build-staging-image:
-  #  uses: ./.github/workflows/build-staging.yaml
-  #  with:
-  #    DOCKERHUB_USERNAME: xia1997x
-  #    DOCKERHUB_REGISTRY: xray-warp-staging
-  #  secrets:
-  #    DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-  #
-  #reset-staging-environment:
-  #  uses: ./.github/workflows/destroy-environment-staging.yaml
-  #  with:
-  #    CONFIG_DIRECTORY: tests/infrastructure
-  #  secrets:
-  #    TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
-  #
-  #setup-staging-environment:
-  #  uses: ./.github/workflows/setup-environment-staging.yaml
-  #  with:
-  #    CONFIG_DIRECTORY: tests/infrastructure
-  #  secrets:
-  #    TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
-  #    DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
-  #    CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
-  #    TLS_CERT_BASE64: ${{ secrets.TLS_CERT_BASE64 }}
-  #    TLS_KEY_BASE64: ${{ secrets.TLS_KEY_BASE64 }}
-  #  needs: [build-staging-image, reset-staging-environment]
+  build-staging-image:
+    uses: ./.github/workflows/build-staging.yaml
+    with:
+      DOCKERHUB_USERNAME: xia1997x
+      DOCKERHUB_REGISTRY: xray-warp-staging
+    secrets:
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+
+  reset-staging-environment:
+    uses: ./.github/workflows/destroy-environment-staging.yaml
+    with:
+      CONFIG_DIRECTORY: tests/infrastructure
+    secrets:
+      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+
+  setup-staging-environment:
+    uses: ./.github/workflows/setup-environment-staging.yaml
+    with:
+      CONFIG_DIRECTORY: tests/infrastructure
+    secrets:
+      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+      DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
+      CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
+      TLS_CERT_BASE64: ${{ secrets.TLS_CERT_BASE64 }}
+      TLS_KEY_BASE64: ${{ secrets.TLS_KEY_BASE64 }}
+    needs: [build-staging-image, reset-staging-environment]
 
   check-xray-server-connectivity:
     uses: ./.github/workflows/xray-connectivity-check.yaml
@@ -38,7 +38,7 @@ jobs:
       XRAY_UUID: eefc8f5f-f2fe-43b5-881c-653994d5a617
     secrets:
       XRAY_HOST: ${{ secrets.DOMAIN_NAME }}
-    #needs: [setup-staging-environment]
+    needs: [setup-staging-environment]
 
   destroy-staging-environment:
     if: ${{ !cancelled() }} # Always run the job if not cancelled manually in the UI
