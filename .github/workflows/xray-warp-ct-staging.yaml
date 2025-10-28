@@ -56,10 +56,10 @@ jobs:
     steps:
       - name: Force fail after failed xray connectivity check
         run: |
-          if [[ "${{ needs.check-xray-warp-ct-server-connectivity.result }}" == "failure" ]]; then
+          if [[ "${{ needs.check-xray-server-connectivity.result }}" == "failure" ]]; then
             echo "❌ xray-warp-ct staging CI workflow was not completed successfully!"
             exit 1
           else
             echo "✅ xray-warp-ct staging CI workflow completed successfully!"
           fi
-    needs: [check-xray-warp-ct-server-connectivity, destroy-staging-environment]
+    needs: [check-xray-server-connectivity, destroy-staging-environment]
