@@ -37,4 +37,3 @@ jobs:
       - run: terraform init
       - id: apply
         run: terraform apply --auto-approve
-    needs: [base64-encode-tls-cert-and-key]
