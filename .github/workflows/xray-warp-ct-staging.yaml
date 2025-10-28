@@ -11,25 +11,25 @@ jobs:
   #  secrets:
   #    DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
-  reset-staging-environment:
-    uses: ./.github/workflows/destroy-environment-staging.yaml
-    with:
-      CONFIG_DIRECTORY: tests/infrastructure
-    secrets:
-      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
-
-  setup-staging-environment:
-    uses: ./.github/workflows/setup-environment-staging.yaml
-    with:
-      CONFIG_DIRECTORY: tests/infrastructure
-    secrets:
-      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
-      DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
-      CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
-      TLS_CERT_BASE64: ${{ secrets.TLS_CERT_BASE64 }}
-      TLS_KEY_BASE64: ${{ secrets.TLS_KEY_BASE64 }}
-    needs: [reset-staging-environment]
-    #needs: [build-staging-image, reset-staging-environment]
+  #reset-staging-environment:
+  #  uses: ./.github/workflows/destroy-environment-staging.yaml
+  #  with:
+  #    CONFIG_DIRECTORY: tests/infrastructure
+  #  secrets:
+  #    TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+  #
+  #setup-staging-environment:
+  #  uses: ./.github/workflows/setup-environment-staging.yaml
+  #  with:
+  #    CONFIG_DIRECTORY: tests/infrastructure
+  #  secrets:
+  #    TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+  #    DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
+  #    CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
+  #    TLS_CERT_BASE64: ${{ secrets.TLS_CERT_BASE64 }}
+  #    TLS_KEY_BASE64: ${{ secrets.TLS_KEY_BASE64 }}
+  #  needs: [reset-staging-environment]
+  #  #needs: [build-staging-image, reset-staging-environment]
 
   check-xray-warp-ct-server-connectivity:
     uses: ./.github/workflows/xray-warp-ct-connectivity-check.yaml
@@ -39,7 +39,7 @@ jobs:
       XRAY_UUID: eefc8f5f-f2fe-43b5-881c-653994d5a617
     secrets:
       XRAY_HOST: ${{ secrets.DOMAIN_NAME }}
-    needs: [setup-staging-environment]
+    #needs: [setup-staging-environment]
 
   destroy-staging-environment:
     if: ${{ !cancelled() }} # Always run the job if not cancelled manually in the UI
