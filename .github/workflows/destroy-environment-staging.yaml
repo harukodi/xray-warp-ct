@@ -9,15 +9,9 @@ on:
     secrets:
       TF_API_TOKEN:
         required: False
-      DOMAIN_NAME:
-        required: false
-      CLOUDFLARE_TOKEN:
-        required: false
 
 env:
   TF_TOKEN_app_terraform_io: "${{ secrets.TF_API_TOKEN }}"
-  TF_VAR_domain_name: "${{ secrets.DOMAIN_NAME }}"
-  TF_VAR_cloudflare_token: "${{ secrets.CLOUDFLARE_TOKEN }}"
 
 jobs:
   terraform-destroy:

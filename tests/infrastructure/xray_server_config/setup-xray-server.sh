@@ -6,15 +6,15 @@ declare -A xray_config_values=(
     ["XRAY_PATH"]="$2"
     ["XRAY_UUID"]="$3"
     ["CLOUDFLARE_AUTH_TOKEN"]="$4"
-    ["TLS_CERT"]="$5"
-    ["TLS_KEY"]="$6"
+    ["TLS_CERT_BASE64"]="$5"
+    ["TLS_KEY_BASE64"]="$6"
 )
 
 function create_docker_tls_volume_bind_and_bind_tls_cert_and_key_func () {
-    local CERT_DIR="$SCRIPT_DIR/config/certs/caddy/certificates/acme-v02.api.letsencrypt.org-directory/$DOMAIN_NAME"
+    local CERT_DIR="${SCRIPT_DIR}/config/certs/caddy/certificates/acme-v02.api.letsencrypt.org-directory/${DOMAIN_NAME}"
     mkdir -p "$CERT_DIR"
-    echo "$TLS_CERT" | base64 -d > "${CERT_DIR}/${DOMAIN_NAME}.crt"
-    echo "$TLS_KEY" | base64 -d > "${CERT_DIR}/${DOMAIN_NAME}.key"
+    echo "$TLS_CERT_BASE64" | base64 -d > "${CERT_DIR}/${DOMAIN_NAME}.crt"
+    echo "$TLS_KEY_BASE64" | base64 -d > "${CERT_DIR}/${DOMAIN_NAME}.key"
 }
 
 function install_docker_tools () {
@@ -65,7 +65,7 @@ function main () {
 
 if [ "$#" -ne 6 ]; then
     echo "Error: Missing required parameters."
-    echo "Usage: $0 <DOMAIN_NAME> <XRAY_PATH> <XRAY_UUID> <CLOUDFLARE_AUTH_TOKEN> <TLS_CERT> <TLS_KEY>"
+    echo "Usage: $0 <DOMAIN_NAME> <XRAY_PATH> <XRAY_UUID> <CLOUDFLARE_AUTH_TOKEN> <TLS_CERT_BASE64> <TLS_KEY_BASE64>"
     exit 1
 else
     main
