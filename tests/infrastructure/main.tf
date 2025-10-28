@@ -48,11 +48,11 @@ resource "digitalocean_droplet" "xray-warp-ct-droplet" {
   image     = var.droplet_image
   region    = var.region
   size      = var.droplet_size
-  user_data = <<-CLOUDINIT
+  user_data = <<-EOT
     #cloud-config
     runcmd:
       - [ git, clone, "https://github.com/harukodi/xray-warp-ct.git" ]
       - [ chmod, "+x", "/xray-warp-ct/tests/infrastructure/xray_server_config/setup-xray-server.sh" ]
-      - [ bash, -c, './xray-warp-ct/tests/infrastructure/xray_server_config/setup-xray-server.sh "${var.domain_name}" "xray-warp-test-path" "eefc8f5f-f2fe-43b5-881c-653994d5a617" "${var.cloudflare_token}" "${var.tls_cert_base64}" "${var.tls_key_base64}"' ]
-  CLOUDINIT
+      - [ bash, -c, "./xray-warp-ct/tests/infrastructure/xray_server_config/setup-xray-server.sh '${var.domain_name}' 'xray-warp-test-path' 'eefc8f5f-f2fe-43b5-881c-653994d5a617' '${var.cloudflare_token}' '${var.tls_cert_base64}' '${var.tls_key_base64}'" ]
+  EOT
 }
