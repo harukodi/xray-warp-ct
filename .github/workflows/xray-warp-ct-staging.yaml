@@ -49,16 +49,16 @@ jobs:
   #    TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
   #  needs: [check-xray-server-connectivity]
 
-  post-checks:
-    if: ${{ !cancelled() }} # Always run the job if not cancelled manually in the UI
-    runs-on: ubuntu-latest
-    steps:
-      - name: Force fail after failed xray connectivity check
-        run: |
-          if [[ "${{ needs.check-xray-server-connectivity.result }}" == "failure" ]]; then
-            echo "❌ xray-warp-ct staging CI workflow was not completed successfully!"
-            exit 1
-          else
-            echo "✅ xray-warp-ct staging CI workflow completed successfully!"
-          fi
-    needs: [check-xray-server-connectivity, destroy-staging-environment]
+  #post-checks:
+  #  if: ${{ !cancelled() }} # Always run the job if not cancelled manually in the UI
+  #  runs-on: ubuntu-latest
+  #  steps:
+  #    - name: Force fail after failed xray connectivity check
+  #      run: |
+  #        if [[ "${{ needs.check-xray-server-connectivity.result }}" == "failure" ]]; then
+  #          echo "❌ xray-warp-ct staging CI workflow was not completed successfully!"
+  #          exit 1
+  #        else
+  #          echo "✅ xray-warp-ct staging CI workflow completed successfully!"
+  #        fi
+  #  needs: [check-xray-server-connectivity, destroy-staging-environment]
