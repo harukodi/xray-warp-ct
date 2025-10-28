@@ -57,9 +57,9 @@ function substitute_values_for_xray_client_config_func () {
 function test_xray_server_connectivity_func () {
     local COUNT=$1
     local XRAY_CONFIG_FILE="$SCRIPT_DIR/client_config.json"
-    xray run -c "$XRAY_CONFIG_FILE" 2>&1 >/dev/null &
-    local XRAY_PID=$!
     for i in $(seq 1 $COUNT); do
+        xray run -c "$XRAY_CONFIG_FILE" 2>&1 >/dev/null &
+        local XRAY_PID=$!
         sleep 10
         local RESPONSE=$(curl -w "%{http_code}" -o /dev/null -s --socks5-hostname 127.0.0.1:10809 -L https://google.com)
         if [[ "$RESPONSE" != "000" ]]; then
@@ -68,9 +68,9 @@ function test_xray_server_connectivity_func () {
             exit 0
         else
             echo "⚠️ Waiting for Xray server to come online, status: $RESPONSE"
+            kill $XRAY_PID
         fi
     done
-    kill $XRAY_PID
 }
 
 function main () {
