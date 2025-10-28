@@ -1,5 +1,4 @@
 {
-	acme_dns cloudflare {env.CLOUDFLARE_AUTH_TOKEN}
 	default_bind 0.0.0.0
 	https_port 443
 }
