@@ -70,6 +70,7 @@ function test_xray_server_connectivity_func () {
             echo "⚠️ Waiting for Xray server to come online, status: $RESPONSE"
             kill $XRAY_PID
         fi
+        ps aux | grep xray
     done
 }
 
