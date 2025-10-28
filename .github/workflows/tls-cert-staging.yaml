@@ -17,12 +17,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: "Create tls cert and key"
+      - name: Create tls cert and key
         run: |
           ./helpers_scripts/obtain-cert.sh
           mkdir -p $GITHUB_WORKSPACE/certs
           sudo cp /var/snap/lego/common/.lego/certificates/$DOMAIN_NAME.crt $GITHUB_WORKSPACE/certs/$DOMAIN_NAME.crt
           sudo cp /var/snap/lego/common/.lego/certificates/$DOMAIN_NAME.key $GITHUB_WORKSPACE/certs/$DOMAIN_NAME.key
           sudo chown $USER:$USER $GITHUB_WORKSPACE/certs/*
+      - name: Export tls cert and key to github secrets
+        run: |
           gh secret set TLS_CERT_BASE64 --body "$(base64 -w0 $GITHUB_WORKSPACE/certs/$DOMAIN_NAME.crt)"
           gh secret set TLS_KEY_BASE64 --body "$(base64 -w0 $GITHUB_WORKSPACE/certs/$DOMAIN_NAME.key)"
