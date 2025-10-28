@@ -13,39 +13,20 @@ on:
         required: true
       CLOUDFLARE_TOKEN:
         required: true
-      GH_PAT:
+      TLS_CERT_BASE64:
+        required: false
+      TLS_KEY_BASE64:
         required: false
 
 jobs:
-  base64-encode-tls-cert-and-key:
-    runs-on: ubuntu-latest
-    outputs:
-      tls_cert_base64_output: ${{ steps.step1.outputs.tls_cert_base64 }}
-      tls_key_base64_output: ${{ steps.step2.outputs.tls_key_base64 }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: download tls cert and key artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: tls-cert-and-key-artifact
-          path: certs
-          run-id: get-tls-cert-and-key
-          github-token: ${{ secrets.GH_PAT }}
-      - name: base64 enocde tls_cert and tls_key
-        id: tls_cert_and_key_base64_encoded
-        run: |
-          echo "tls_cert_base64=$(base64 -w0 certs/${{ secrets.DOMAIN_NAME }}.crt)") >> "$GITHUB_OUTPUT"
-          echo "tls_key_base64=$(base64 -w0 certs/${{ secrets.DOMAIN_NAME }}.key") >> "$GITHUB_OUTPUT"
-
   terraform-apply:
     runs-on: ubuntu-latest
     env:
       TF_TOKEN_app_terraform_io: "${{ secrets.TF_API_TOKEN }}"
       TF_VAR_domain_name: "${{ secrets.DOMAIN_NAME }}"
       TF_VAR_cloudflare_token: "${{ secrets.CLOUDFLARE_TOKEN }}"
-      TF_VAR_tls_cert_base64: ${{needs.base64-encode-tls-cert-and-key.outputs.tls_cert_base64_output}}
-      TF_VAR_tls_key_base64: ${{needs.base64-encode-tls-cert-and-key.outputs.tls_key_base64_output}}
+      TF_VAR_tls_cert_base64: ${{ secrets.TLS_CERT_BASE64 }}
+      TF_VAR_tls_key_base64: ${{ secrets.TLS_KEY_BASE64 }}
     defaults:
       run:
         working-directory: ${{ inputs.CONFIG_DIRECTORY }}

@@ -3,20 +3,20 @@ name: xray-warp-ct staging CI
 on: workflow_dispatch
 
 jobs:
-  #build-staging-image:
-  #  uses: ./.github/workflows/build-staging.yaml
-  #  with:
-  #    DOCKERHUB_USERNAME: xia1997x
-  #    DOCKERHUB_REGISTRY: xray-warp-staging
-  #  secrets:
-  #    DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+  build-staging-image:
+    uses: ./.github/workflows/build-staging.yaml
+    with:
+      DOCKERHUB_USERNAME: xia1997x
+      DOCKERHUB_REGISTRY: xray-warp-staging
+    secrets:
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
-  #reset-staging-environment:
-  #  uses: ./.github/workflows/destroy-environment-staging.yaml
-  #  with:
-  #    CONFIG_DIRECTORY: tests/infrastructure
-  #  secrets:
-  #    TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+  reset-staging-environment:
+    uses: ./.github/workflows/destroy-environment-staging.yaml
+    with:
+      CONFIG_DIRECTORY: tests/infrastructure
+    secrets:
+      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
 
   setup-staging-environment:
     uses: ./.github/workflows/setup-environment-staging.yaml
@@ -26,8 +26,9 @@ jobs:
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
       DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
       CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
-      GH_PAT: ${{ secrets.GH_PAT }}
-    #needs: [build-staging-image, reset-staging-environment]
+      TLS_CERT_BASE64: ${{ secrets.TLS_CERT_BASE64 }}
+      TLS_KEY_BASE64: ${{ secrets.TLS_KEY_BASE64 }}
+    needs: [build-staging-image, reset-staging-environment]
 
   check-xray-warp-ct-server-connectivity:
     uses: ./.github/workflows/xray-warp-ct-connectivity-check.yaml
@@ -61,6 +62,3 @@ jobs:
             echo "✅ xray-warp-ct staging CI workflow completed successfully!"
           fi
     needs: [check-xray-warp-ct-server-connectivity, destroy-staging-environment]
-## gör så här gör en hell artifact ut av lego directory och sedan får man checka med lego clienten om certet behöver
-## förnyas i varje jobb lego clienten kan hantera allt om vi bara expoterar hela lego directory som är under snapd.
-## eventult får vi perms errors men detta kan testat då github artifacts inte kan delas!
