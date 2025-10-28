@@ -48,7 +48,7 @@ jobs:
       CONFIG_DIRECTORY: tests/infrastructure
     secrets:
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
-    needs: [check-xray-warp-ct-server-connectivity]
+    needs: [check-xray-server-connectivity]
 
   post-checks:
     if: ${{ !cancelled() }} # Always run the job if not cancelled manually in the UI
