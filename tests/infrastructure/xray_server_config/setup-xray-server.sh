@@ -63,12 +63,10 @@ function main () {
     start_xray_warp_container_func
 }
 
-create_docker_tls_volume_bind_and_bind_tls_cert_and_key_func
-
-#if [ "$#" -ne 6 ]; then
-#    echo "Error: Missing required parameters."
-#    echo "Usage: $0 <DOMAIN_NAME> <XRAY_PATH> <XRAY_UUID> <CLOUDFLARE_AUTH_TOKEN> <TLS_CERT_BASE64> <TLS_KEY_BASE64>"
-#    exit 1
-#else
-#    main
-#fi
+if [ "$#" -ne 6 ]; then
+    echo "Error: Missing required parameters."
+    echo "Usage: $0 <DOMAIN_NAME> <XRAY_PATH> <XRAY_UUID> <CLOUDFLARE_AUTH_TOKEN> <TLS_CERT_BASE64> <TLS_KEY_BASE64>"
+    exit 1
+else
+    main
+fi
