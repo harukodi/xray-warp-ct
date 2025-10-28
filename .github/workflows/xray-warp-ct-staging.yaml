@@ -3,13 +3,13 @@ name: xray-warp-ct staging CI
 on: workflow_dispatch
 
 jobs:
-  build-staging-image:
-    uses: ./.github/workflows/build-staging.yaml
-    with:
-      DOCKERHUB_USERNAME: xia1997x
-      DOCKERHUB_REGISTRY: xray-warp-staging
-    secrets:
-      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+  #build-staging-image:
+  #  uses: ./.github/workflows/build-staging.yaml
+  #  with:
+  #    DOCKERHUB_USERNAME: xia1997x
+  #    DOCKERHUB_REGISTRY: xray-warp-staging
+  #  secrets:
+  #    DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
   reset-staging-environment:
     uses: ./.github/workflows/destroy-environment-staging.yaml
@@ -28,7 +28,8 @@ jobs:
       CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
       TLS_CERT_BASE64: ${{ secrets.TLS_CERT_BASE64 }}
       TLS_KEY_BASE64: ${{ secrets.TLS_KEY_BASE64 }}
-    needs: [build-staging-image, reset-staging-environment]
+    needs: [reset-staging-environment]
+    #needs: [build-staging-image, reset-staging-environment]
 
   check-xray-warp-ct-server-connectivity:
     uses: ./.github/workflows/xray-warp-ct-connectivity-check.yaml
