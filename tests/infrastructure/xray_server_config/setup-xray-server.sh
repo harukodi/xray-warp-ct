@@ -6,15 +6,11 @@ declare -A xray_config_values=(
     ["XRAY_PATH"]="$2"
     ["XRAY_UUID"]="$3"
     ["CLOUDFLARE_AUTH_TOKEN"]="$4"
-    ["TLS_CERT_BASE64"]="$5"
-    ["TLS_KEY_BASE64"]="$6"
 )
 
-function create_docker_tls_volume_bind_and_bind_tls_cert_and_key_func () {
-    local CERT_DIR="$SCRIPT_DIR/config/certs/caddy/certificates/acme-v02.api.letsencrypt.org-directory/${xray_config_values["DOMAIN_NAME"]}/"
-    mkdir -p "$CERT_DIR"
-    echo "${xray_config_values["TLS_CERT_BASE64"]}" | base64 -d > "$CERT_DIR/${xray_config_values["DOMAIN_NAME"]}.crt"
-    echo "${xray_config_values["TLS_KEY_BASE64"]}" | base64 -d > "$CERT_DIR/${xray_config_values["DOMAIN_NAME"]}.key"
+function create_docker_volume_caddyfile_func () {
+    local CADDY_DIR="$SCRIPT_DIR/config/caddy_config"
+    mkdir -p "$CADDY_DIR"
 }
 
 function install_docker_tools () {
@@ -34,20 +30,24 @@ function install_docker_tools () {
     sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 }
 
-function copy_config_from_template_func () {
-    cp $SCRIPT_DIR/template.public.env $SCRIPT_DIR/.public.env
+function copy_config_from_template_file_func () {
+    local template_file="$1"
+    local output_file="$2"
+    cp $SCRIPT_DIR/$template_file $SCRIPT_DIR/$output_file
 }
 
-function substitute_values_for_xray_client_config_helper_func () {
+function substitute_values_for_config_file_helper_func () {
     local local_key="$1"
     local local_value="$2"
-    sed -i "s/\${$local_key}/$local_value/g" $SCRIPT_DIR/.public.env
+    local file_to_substitute="$3"
+    sed -i "s/\${$local_key}/$local_value/g" $SCRIPT_DIR/$file_to_substitute
 }
 
-function substitute_values_for_xray_env_file_func () {
+function substitute_values_for_config_files_func () {
+    local file_to_substitute="$1"
     for key in "${!xray_config_values[@]}"
     do
-        substitute_values_for_xray_client_config_helper_func "$key" "${xray_config_values[$key]}"
+        substitute_values_for_config_file_helper_func "$key" "${xray_config_values[$key]}" "$file_to_substitute"
     done
 }
 
@@ -57,15 +57,17 @@ function start_xray_warp_container_func () {
 
 function main () {
     install_docker_tools
-    create_docker_tls_volume_bind_and_bind_tls_cert_and_key_func
-    copy_config_from_template_func
-    substitute_values_for_xray_env_file_func
+    create_docker_volume_caddyfile_func
+    copy_config_from_template_file_func "templates/template.public.env" "./.public.env"
+    copy_config_from_template_file_func "templates/caddyfile_test_template" "./config/caddy_config/Caddyfile"
+    substitute_values_for_config_files_func "./.public.env"
+    substitute_values_for_config_files_func "./config/caddy_config/Caddyfile"
     start_xray_warp_container_func
 }
 
-if [ "$#" -ne 6 ]; then
+if [ "$#" -ne 4 ]; then
     echo "Error: Missing required parameters."
-    echo "Usage: $0 <DOMAIN_NAME> <XRAY_PATH> <XRAY_UUID> <CLOUDFLARE_AUTH_TOKEN> <TLS_CERT_BASE64> <TLS_KEY_BASE64>"
+    echo "Usage: $0 <DOMAIN_NAME> <XRAY_PATH> <XRAY_UUID> <CLOUDFLARE_AUTH_TOKEN>"
     exit 1
 else
     main

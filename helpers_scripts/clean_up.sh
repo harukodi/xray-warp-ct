@@ -7,6 +7,7 @@ files_to_remove=(
     "wgcf/*"
     "tests/client_config.json"
     "tests/infrastructure/xray_server_config/config"
+    "tests/infrastructure/xray_server_config/.public.env"
 )
 
 function remove_file () {

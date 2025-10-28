@@ -10,7 +10,6 @@ from generate_caddy_config import generate_caddy_config
 from start_services import start_xray_core, start_caddy_server
 
 files_to_check = [
-    "./caddy_config/Caddyfile",
     "./xray_config/xray_config.json",
     "./xray_config/xray_client_qr_code.png",
     "./xray_config/vless_link.txt"
