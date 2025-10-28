@@ -31,8 +31,8 @@ jobs:
     needs: [reset-staging-environment]
     #needs: [build-staging-image, reset-staging-environment]
 
-  check-xray-warp-ct-server-connectivity:
-    uses: ./.github/workflows/xray-warp-ct-connectivity-check.yaml
+  check-xray-server-connectivity:
+    uses: ./.github/workflows/xray-connectivity-check.yaml
     with:
       TESTS_DIRECTORY: tests
       XRAY_PATH: xray-warp-test-path

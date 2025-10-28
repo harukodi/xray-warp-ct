@@ -1,4 +1,4 @@
-name: xray warp ct connecitvity check
+name: xray connecitvity test
 
 on:
   workflow_call:
