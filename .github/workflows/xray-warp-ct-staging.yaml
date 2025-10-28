@@ -40,14 +40,14 @@ jobs:
       XRAY_HOST: ${{ secrets.DOMAIN_NAME }}
     #needs: [setup-staging-environment]
 
-  destroy-staging-environment:
-    if: ${{ !cancelled() }} # Always run the job if not cancelled manually in the UI
-    uses: ./.github/workflows/destroy-environment-staging.yaml
-    with:
-      CONFIG_DIRECTORY: tests/infrastructure
-    secrets:
-      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
-    needs: [check-xray-server-connectivity]
+  #destroy-staging-environment:
+  #  if: ${{ !cancelled() }} # Always run the job if not cancelled manually in the UI
+  #  uses: ./.github/workflows/destroy-environment-staging.yaml
+  #  with:
+  #    CONFIG_DIRECTORY: tests/infrastructure
+  #  secrets:
+  #    TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+  #  needs: [check-xray-server-connectivity]
 
   post-checks:
     if: ${{ !cancelled() }} # Always run the job if not cancelled manually in the UI
