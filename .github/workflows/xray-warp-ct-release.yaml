@@ -1,4 +1,4 @@
-name: xray-warp-ct-release CI
+name: xray-warp-ct release CI
 
 on:
   push:
