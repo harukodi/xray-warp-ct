@@ -33,7 +33,7 @@ services:
       - ./config/caddy_config:/xray_base/caddy_config
 ```
 
-## .env file example
+## Env file example
 ```dotenv
 DOMAIN_NAME=
 CLOUDFLARE_AUTH_TOKEN=
@@ -46,7 +46,7 @@ ENABLE_IPV6=False
 XRAY_VERSION=latest
 WGCF_VERSION=latest
 ```
-### **ENVs:**
+### **Environment variables:**
 > `DOMAIN_NAME`
 > - Domain name to use for the DNS record.
 > - Must be a subdomain in the format of `subdomain.domain.tld`
