@@ -1,4 +1,4 @@
-name: xray-warp-ct multiplatform build staging
+name: xray-warp-ct build staging
 
 on:
   workflow_call:
