@@ -1,4 +1,4 @@
-# xray-warp-ct docker container
+# xray-warp-ct docs
 
 ## Prerequisites
 * Docker and Docker-compose
