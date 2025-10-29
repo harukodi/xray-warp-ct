@@ -1,4 +1,4 @@
-name: xray-warp-ct-release-multiplatform-build
+name: xray-warp-ct-release CI
 
 on:
   push:
