@@ -90,6 +90,7 @@ WGCF_VERSION=latest
 >
 > `XRAY_PATH`
 > - Optional. If set, defines the custom path used by Xray.
+> - Must be **lowercase** and may **only contain letters, numbers, and `-`**.
 > - If not set, the script will automatically generate a random path.
 > - **Not recommended** for normal use; primarily added for testing purposes.
 
