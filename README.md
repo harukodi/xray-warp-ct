@@ -1,4 +1,4 @@
-# Xray-Warp docker container
+# xray-warp-ct docs
 
 ## Prerequisites
 * Docker and Docker-compose
@@ -8,11 +8,11 @@
 
 ## Create docker-compose file and the needed folders
 ```bash
-mkdir xray-warp && \
-cd xray-warp && \
-mkdir certs && \
-mkdir -p config/{caddy_config,xray_config} && \
-touch docker-compose.yaml
+mkdir xray-warp-ct && \
+cd xray-warp-ct && \
+mkdir -p config/{certs,caddy_config,xray_config/xray_core} && \
+touch docker-compose.yaml && \
+touch .env
 ```
 
 ## Docker-compose file example
@@ -22,65 +22,88 @@ services:
     image: xia1997x/xray-warp:latest
     container_name: xray-warp-ct
     user: 1000:1000
+    env_file:
+      - .env
     ports:
       - '443:443'
-    environment:
-      - DOMAIN_NAME=subdomain.domain.tld
-      - PORT=443
-      - XRAY_VERSION=latest
-      - WGCF_VERSION=2.2.24
-      - CLOUDFLARE_AUTH_TOKEN=
-      - ENABLE_CADDY_LOG=False
-      - ENABLE_IPV6=False
     volumes:
-      - ./certs:/xray_base/caddy_certs
+      - ./config/certs:/xray_base/caddy_certs
       - ./config/xray_config:/xray_base/xray_config
+      - ./config/xray_config/xray_core:/xray_base/xray_config/xray_core
       - ./config/caddy_config:/xray_base/caddy_config
 ```
 
-### **ENVs:**
+## Env file example
+```dotenv
+DOMAIN_NAME=
+CLOUDFLARE_AUTH_TOKEN=
+PORT=443
+#XRAY_UUID=
+#XRAY_PATH=
+ENABLE_CADDY_LOG=False
+ENABLE_WARP=True
+ENABLE_IPV6=False
+XRAY_VERSION=latest
+WGCF_VERSION=latest
+```
+### **Environment variables:**
 > `DOMAIN_NAME`
-> - Creates the dns record for you on Cloudflare.
-> - Sets your domain for the xray-warp container
+> - Domain name to use for the DNS record.
 > - Must be a subdomain in the format of `subdomain.domain.tld`
+> - `Required`
+> 
+> `CLOUDFLARE_AUTH_TOKEN`
+> - Cloudflare API token required for DNS record and TLS certificate creation.
 > - `Required`
 >
 > `PORT`
-> - Used to set the port you want to use, if you change the port of the docker container. Keep in mind that the port inside of the docker container can not be changed.
-> - `YOUR-CUSTOM-PORT:443`. 
-> - This is also used to set the right port for the vless link
+> - Sets the port you want to use, if you change the port of the Docker container. Keep in mind that the port inside the Docker container cannot be changed.
+> - This is also used to set the right port for the VLESS link.
+> - Format: `YOUR-CUSTOM-PORT:443`
+> - Default: `443`
 > - `Required`
-> - Default `443`
 >
 > `XRAY_VERSION`
-> - Used to fetch the `xray core`
-> - Will now skip over pre-releases. 
-> - To set a custom xray core version you can set the variable to `XRAY_VERSION=25.3.6`.
-> - Default `latest`
+> - Used to fetch the `xray-core` binary.
+> - To set a custom Xray version, use e.g., `XRAY_VERSION=25.3.6`.
+> - Default: `latest`
+> - `Required`
 >
 > `WGCF_VERSION`
-> - Used to fetch the `WGCF` cli tool to create the warp profile to use with xray core
-> - Default `2.2.24`
-> 
-> `ENABLE_CADDY_LOG`
-> - Can be set to `True` if you want the log output of caddy.
-> - Default `False`
-> 
-> `CLOUDFLARE_AUTH_TOKEN`
-> - Stores the Cloudflare API token required for authentication and the tls certificate creation.
+> - Used to fetch the `WGCF` binary.
+> - To set a custom WGCF version, use e.g., `WGCF_VERSION=2.2.29`.
+> - Default: `latest`
 > - `Required`
 > 
+> `ENABLE_CADDY_LOG`
+> - Can be set to `True` to enable the log output of Caddy.
+> - Default: `False`
+> 
 > `ENABLE_IPV6`
-> - Can be set to `True` if the vps supports ipv6.
-> - Default `False`
+> - Can be set to `True` if the VPS supports IPv6.
+> - Default: `False`
+>
+> `XRAY_UUID`
+> - Optional. If set, this value will be used as the Xray UUID.
+> - If not set (commented out or empty), the script will automatically generate a valid UUID.
+> - **Not recommended** for normal use; primarily added for testing purposes.
+>
+> `XRAY_PATH`
+> - Optional. If set, defines the custom path used by Xray.
+> - Must be **lowercase** and may **only contain letters, numbers, and `-`**.
+> - If not set, the script will automatically generate a random path.
+> - **Not recommended** for normal use; primarily added for testing purposes.
+
 
 ## File tree
 ```
-📦xray-ct-test  
- ┣ 📂certs  
- ┣ 📂config  
- ┃ ┣ 📂caddy_config  
- ┃ ┗ 📂xray_config  
+📦xray-warp-ct
+ ┣ 📂config
+ ┃ ┣ 📂caddy_config
+ ┃ ┣ 📂certs
+ ┃ ┗ 📂xray_config
+ ┃ ┃ ┗ 📂xray_core
+ ┣ 📜.env
  ┗ 📜docker-compose.yaml
 ```
 

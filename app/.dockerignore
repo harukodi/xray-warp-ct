@@ -32,5 +32,8 @@
 **/secrets.dev.yaml
 **/values.dev.yaml
 **/.gitkeep
+**/requirements.in
+**/helpers_scripts
+**/tests
 LICENSE
 README.md

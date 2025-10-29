@@ -161,15 +161,15 @@ cython_debug/
 
 
 # Config files used for testing
-caddy_config/caddyfile.json
-wgcf/wgcf
-wgcf/wgcf-account.toml
-wgcf/wgcf-profile.conf
-xray_config/xray_client_qr_code.png
-xray_config/xray_config.json
-xray_core/LICENSE
-xray_core/README.md
-xray_core/geoip.dat
-xray_core/geosite.dat
-xray_core/xray
-xray_config/vless_link.txt
+app/caddy_config/*
+!app/caddy_config/.gitkeep
+app/wgcf/*
+!app/wgcf/.gitkeep
+app/xray_config/*
+!app/xray_config/.gitkeep
+!app/xray_config/xray_core/.gitkeep
+tests/client_config.json
+tests/infrastructure/xray_server_config/config/
+.terraform
+.terraform.*
+.public.env

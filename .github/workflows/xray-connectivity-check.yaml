@@ -1,0 +1,32 @@
+name: xray connecitvity test
+
+on:
+  workflow_call:
+    inputs:
+      TESTS_DIRECTORY:
+        required: True
+        type: string
+      XRAY_PATH:
+        required: True
+        type: string
+      XRAY_UUID:
+        required: true
+        type: string
+    secrets:
+      XRAY_HOST:
+        required: True
+
+env:
+  XRAY_HOST: ${{ secrets.XRAY_HOST }}
+  XRAY_PATH: ${{ inputs.XRAY_PATH }}
+  XRAY_UUID: ${{ inputs.XRAY_UUID }}
+
+jobs:
+  xray-warp-ct-connecivity-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Start xray-warp-ct connectivity check
+        run: |
+          ./${{ inputs.TESTS_DIRECTORY }}/client_server_test.sh

@@ -1,0 +1,68 @@
+{
+    "log": {
+        "loglevel": "info"
+    },
+    "inbounds": [
+        {
+            "tag": "socks",
+            "port": 10809,
+            "listen": "127.0.0.1",
+            "protocol": "socks",
+            "sniffing": {
+                "enabled": true,
+                "destOverride": [
+                    "http",
+                    "tls"
+                ],
+                "routeOnly": false
+            },
+            "settings": {
+                "auth": "noauth",
+                "udp": true,
+                "allowTransparent": false
+            }
+        }
+    ],
+    "outbounds": [
+        {
+            "tag": "xray-warp-ct-server",
+            "protocol": "vless",
+            "settings": {
+                "vnext": [
+                    {
+                        "address": "${HOST}",
+                        "port": 443,
+                        "users": [
+                            {
+                                "id": "${UUID}",
+                                "security": "auto",
+                                "encryption": "none"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "xhttp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "${HOST}",
+                    "alpn": [
+                        "h2"
+                    ],
+                    "fingerprint": "chrome"
+                },
+                "xhttpSettings": {
+                    "path": "${PATH}",
+                    "host": "${HOST}",
+                    "mode": "auto"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": -1
+            }
+        }
+    ]
+}
