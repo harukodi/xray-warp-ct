@@ -161,13 +161,13 @@ cython_debug/
 
 
 # Config files used for testing
-caddy_config/*
-!caddy_config/.gitkeep
-wgcf/*
-!wgcf/.gitkeep
-xray_config/*
-!xray_config/.gitkeep
-!xray_config/xray_core/.gitkeep
+app/caddy_config/*
+!app/caddy_config/.gitkeep
+app/wgcf/*
+!app/wgcf/.gitkeep
+app/xray_config/*
+!app/xray_config/.gitkeep
+!app/xray_config/xray_core/.gitkeep
 tests/client_config.json
 tests/infrastructure/xray_server_config/config/
 .terraform
