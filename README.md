@@ -22,6 +22,7 @@ services:
     image: xia1997x/xray-warp:latest
     container_name: xray-warp-ct
     user: 1000:1000
+    restart: always
     env_file:
       - .env
     ports:
