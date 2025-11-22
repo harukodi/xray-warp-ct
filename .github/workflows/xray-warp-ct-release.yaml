@@ -4,10 +4,12 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "app/**"
   workflow_dispatch:
 
 jobs:
-  docker:
+  build-production-image:
     runs-on: ubuntu-latest
     steps:
       - name: Get the current date
