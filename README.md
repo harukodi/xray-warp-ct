@@ -26,7 +26,7 @@ services:
     env_file:
       - .env
     ports:
-      - '443:443'
+      - '$PORT:443'
     volumes:
       - ./config/certs:/xray_base/caddy_certs
       - ./config/xray_config:/xray_base/xray_config
