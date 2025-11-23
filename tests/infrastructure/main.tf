@@ -27,16 +27,6 @@ variable "cloudflare_token" {
   sensitive = true
   default   = ""
 }
-variable "tls_cert_base64" {
-  type      = string
-  sensitive = true
-  default   = ""
-}
-variable "tls_key_base64" {
-  type      = string
-  sensitive = true
-  default   = ""
-}
 
 provider "digitalocean" {
   token = var.do_token
