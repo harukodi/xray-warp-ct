@@ -13,10 +13,6 @@ on:
         required: true
       CLOUDFLARE_TOKEN:
         required: true
-      TLS_CERT_BASE64:
-        required: true
-      TLS_KEY_BASE64:
-        required: true
 
 jobs:
   terraform-apply:
@@ -25,8 +21,6 @@ jobs:
       TF_TOKEN_app_terraform_io: "${{ secrets.TF_API_TOKEN }}"
       TF_VAR_domain_name: "${{ secrets.DOMAIN_NAME }}"
       TF_VAR_cloudflare_token: "${{ secrets.CLOUDFLARE_TOKEN }}"
-      TF_VAR_tls_cert_base64: ${{ secrets.TLS_CERT_BASE64 }}
-      TF_VAR_tls_key_base64: ${{ secrets.TLS_KEY_BASE64 }}
     defaults:
       run:
         working-directory: ${{ inputs.CONFIG_DIRECTORY }}
