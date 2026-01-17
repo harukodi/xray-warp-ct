@@ -11,7 +11,7 @@
             "settings": {
                 "clients": [
                     {
-                        "id": ""
+                        "id": "${xray_uuid}"
                     }
                 ],
                 "decryption": "none"
@@ -20,7 +20,7 @@
                 "network": "xhttp",
                 "xhttpSettings": {
                     "mode": "auto",
-                    "path": "PATH-GOES-HERE"
+                    "path": "${xray_path}"
                 }
             }
         }

@@ -4,7 +4,6 @@ files_to_remove=(
     "app/xray_config/vless_link.txt"
     "app/xray_config/xray_client_qr_code.png"
     "app/xray_config/xray_core/*"
-    "app/wgcf/*"
     "tests/client_config.json"
     "tests/infrastructure/xray_server_config/config"
     "tests/infrastructure/xray_server_config/.public.env"

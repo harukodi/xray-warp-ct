@@ -39,7 +39,7 @@ def download_xray_binary(version):
             print(f"Xray-core: {version} x86_64")
         if arch_platform in ["aarch64"]:
             print(f"Xray-core: {version} aarch64")
-    except (urllib.error.HTTPError, urllib.error.URLError) as e:
+    except (urllib.error.HTTPError, urllib.error.URLError, urllib.error.RemoteDisconnected) as e:
         print(f"Xray-binary: failed to download, error: {e.reason}")
         if not path.exists(f"{xray_core_path}/xray"):
             print("Xray binary not found. Try restarting the container!")
