@@ -42,19 +42,20 @@ class Warp:
         else:
             print(
                 f"Error: Could not change Warp mode to '{warp_mode}'.\n"
-                "Reason: The mode is either not supported or invalid.\n"
                 "Supported modes are:\n  - " + "\n  - ".join(supported_modes)
             )
             sys.exit(1)
 
     @staticmethod
     def disconnect():
-        subprocess.run(
+        disconnect_warp_result = subprocess.run(
             ["warp-cli", "disconnect"],
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL
         )
-        print("Warp disconnected successfully!")
+        
+        if disconnect_warp_result.returncode == 0:
+            print("Warp disconnected successfully!")
 
     @staticmethod
     def connect():
@@ -67,10 +68,3 @@ class Warp:
         if connect_warp_result.returncode != 0:
             print("Warp connection failed!")
             sys.exit(1)
-
-
-Warp.register()
-Warp.set_mode("warp+doh")
-Warp.connect()
-Warp.disconnect()
-Warp.unregister()
