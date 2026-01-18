@@ -1,17 +1,20 @@
-import subprocess
-import sys
+import pty, subprocess, sys, os, pty
 
 class Warp:
     @staticmethod
     def register():
-        register_warp_result = subprocess.run(
+        master, slave = pty.openpty()
+        register_warp_result = subprocess.Popen(
             ["warp-cli", "registration", "new"],
-            input="y\n",
-            text=True,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL
+            stdin=slave,
+            stdout=slave,
+            stderr=slave
         )
-
+        os.close(slave)
+        os.write(master, "yes\n".encode())
+        register_warp_result.wait(timeout=10)
+        os.close(master)
+        
         if register_warp_result.returncode == 0:
             print("Warp was registered successfully!")
         else:
