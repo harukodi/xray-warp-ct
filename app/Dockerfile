@@ -29,14 +29,11 @@ RUN apt update && apt install ca-certificates curl gnupg2 lsb-release libcap2-bi
     curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg && \
     echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/cloudflare-client.list && \
     apt update && apt install cloudflare-warp -y && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    #rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN mkdir /xray_base/caddy_certs /run/dbus && \
     chmod +x /usr/bin/caddy && \
     setcap cap_net_bind_service=+ep /usr/bin/caddy && \
-    groupadd -r xray_group && useradd -r -g xray_group -s /bin/bash xray_user && \
-    chown -R xray_user:xray_group /xray_base && \
-    chmod -R o+rwx /xray_base/xray_config/xray_core
+    mv entrypoint.sh /usr/local/bin && chmod +x /usr/local/bin/entrypoint.sh
 
-USER root
-CMD ["sh", "-c", "dbus-daemon --system --fork && /usr/bin/warp-svc > /dev/null 2>&1 & sleep 2 && exec gosu xray_user python main.py"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
