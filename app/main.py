@@ -18,9 +18,9 @@ files_to_check = [
 ]
 
 def initialize():
-    #setup_dns_record()
-    warp_manager.enable_warp_tunnel()
+    setup_dns_record()
     setup_xray_core()
+    warp_manager.enable_warp_tunnel()
     xray_config_manager.generate_xray_config()
     xray_config_manager.generate_xray_qr_code_and_vless_link()
     generate_caddy_config()
@@ -42,8 +42,8 @@ def main():
         initialize()
     else:
         setup_xray_core()
-        
-    warp_manager.enable_warp_tunnel()
+        warp_manager.enable_warp_tunnel()
+    
     service_manager.start_services()
     exit_function()
 

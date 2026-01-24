@@ -1,8 +1,9 @@
 import subprocess
 from pathlib import Path
+from vars import enable_caddy_log
 
 class Services:
-    def __init__(self, enable_caddy_log: str = "False"):
+    def __init__(self):
         self.base_dir = Path(".").parent.resolve()
         self.xray_process = None
         self.caddy_process = None
