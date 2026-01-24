@@ -11,6 +11,7 @@ class XrayConfig:
         self.xray_config_file = self.base_dir / "xray_config" / "xray_config.json"
         self.xray_qr_code_file = self.base_dir / "xray_config" / "xray_client_qr_code.png"
         self.xray_vless_link_file = self.base_dir / "xray_config" / "vless_link.txt"
+        self.xray_binary_path = self.base_dir / "xray_config" / "xray_core"
         self.xray_uuid = xray_uuid
         self.xray_path = xray_path
         self.xray_encryption_key = xray_encryption_key
@@ -23,7 +24,7 @@ class XrayConfig:
             return
 
         xray_vlessenc_result = subprocess.run(
-            "xray vlessenc | awk 'NF' | awk 'NF==2' | head -n 2",
+            f"{self.xray_binary_path}/xray vlessenc | awk 'NF' | awk 'NF==2' | head -n 2",
             capture_output=True,
             shell=True,
             text=True

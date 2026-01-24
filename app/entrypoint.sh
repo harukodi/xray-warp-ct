@@ -10,7 +10,7 @@ function create_user_and_group {
         groupadd -g "$PGID" "$XRAY_GROUP"
     fi
     if ! id "$XRAY_USER" >/dev/null 2>&1; then
-        useradd -u "$PUID" -g "$XRAY_GROUP" -s /usr/sbin/nologin "$XRAY_USER"
+        useradd -u "$PUID" -g "$XRAY_GROUP" -s /bin/bash "$XRAY_USER"
     fi
 }
 
