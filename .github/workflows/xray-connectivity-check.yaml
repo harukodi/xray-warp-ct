@@ -12,6 +12,9 @@ on:
       XRAY_UUID:
         required: true
         type: string
+      XRAY_ENCRYPTION_KEY:
+        required: true
+        type: string
     secrets:
       XRAY_HOST:
         required: True
@@ -20,6 +23,7 @@ env:
   XRAY_HOST: ${{ secrets.XRAY_HOST }}
   XRAY_PATH: ${{ inputs.XRAY_PATH }}
   XRAY_UUID: ${{ inputs.XRAY_UUID }}
+  XRAY_ENCRYPTION_KEY: ${{ inputs.XRAY_ENCRYPTION_KEY }}
 
 jobs:
   xray-warp-ct-connecivity-check:
