@@ -43,6 +43,6 @@ resource "digitalocean_droplet" "xray-warp-ct-droplet" {
     runcmd:
       - [ git, clone, "https://github.com/harukodi/xray-warp-ct.git" ]
       - [ chmod, "+x", "/xray-warp-ct/tests/infrastructure/xray_server_config/setup-xray-server.sh" ]
-      - [ bash, -c, './xray-warp-ct/tests/infrastructure/xray_server_config/setup-xray-server.sh "${var.domain_name}" "xray-warp-test-path" "eefc8f5f-f2fe-43b5-881c-653994d5a617" "${var.cloudflare_token}"' ]
+      - [ bash, -c, './xray-warp-ct/tests/infrastructure/xray_server_config/setup-xray-server.sh "${var.domain_name}" "xray-warp-test-path" "eefc8f5f-f2fe-43b5-881c-653994d5a617" "${var.cloudflare_token}" "mlkem768x25519plus.native.0rtt.JBi3UQGpvuBLssXaGoDGB6HHiO4SH9qCqrD0IgMMSHY" "mlkem768x25519plus.native.600s.EOp-V8CJDo_QewpttvVKvo6nmwOigYwxF_NjjUhrRmM"' ]
   CLOUDINIT
 }

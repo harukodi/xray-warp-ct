@@ -5,11 +5,13 @@ environment_variables=(
     XRAY_HOST
     XRAY_PATH
     XRAY_UUID
+    XRAY_ENCRYPTION_KEY
 )
 declare -A xray_config_values=(
     ["HOST"]="$XRAY_HOST" 
     ["PATH"]="$XRAY_PATH"
     ["UUID"]="$XRAY_UUID"
+    ["XRAY_ENCRYPTION_KEY"]="$XRAY_ENCRYPTION_KEY"
 )
 
 for var in "${environment_variables[@]}"; do
