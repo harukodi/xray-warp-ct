@@ -25,7 +25,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=requirements.txt,target=requirements.txt \
     python -m pip install -r requirements.txt
 
-RUN apt update && apt install ca-certificates curl gnupg2 lsb-release libcap2-bin gosu dbus -y --no-install-recommends && \
+RUN apt update && apt install ca-certificates curl gnupg lsb-release libcap2-bin gosu dbus -y --no-install-recommends && \
     curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg && \
     echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/cloudflare-client.list && \
     apt update && apt install cloudflare-warp --no-install-recommends -y && \
