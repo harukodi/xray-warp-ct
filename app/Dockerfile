@@ -10,6 +10,7 @@ RUN xcaddy build \
     --with github.com/caddy-dns/cloudflare
 FROM caddy:${CADDY_SERVER_VERSION}
 
+# Install step for cloudflare-warp
 FROM debian:${CLOUDFLARE_WARP_INSTALLER_IMAGE} as cloudflare_warp_installer
 RUN apt update && apt install ca-certificates curl gnupg lsb-release libcap2-bin gosu dbus -y --no-install-recommends && \
     curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg && \
@@ -29,9 +30,11 @@ COPY --from=cloudflare_warp_installer /usr/bin/warp-cli /usr/bin/warp-cli
 COPY --from=cloudflare_warp_installer /usr/bin/warp-svc /usr/bin/warp-svc
 COPY --from=cloudflare_warp_installer /usr/sbin/setcap /usr/sbin/setcap
 COPY --from=cloudflare_warp_installer /usr/sbin/gosu /usr/sbin/gosu
-COPY --from=cloudflare_warp_installer /usr/bin/dbus-* /usr/bin/dbus-*
 COPY . /xray_base/
 WORKDIR /xray_base
+
+RUN apt update && apt install dbus libnspr4 libnss3 --no-install-recommends -y && \
+    apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=requirements.txt,target=requirements.txt \
