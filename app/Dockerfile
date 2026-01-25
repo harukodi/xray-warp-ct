@@ -11,8 +11,8 @@ RUN xcaddy build \
 FROM caddy:${CADDY_SERVER_VERSION}
 
 # Install step for cloudflare-warp
-FROM debian:${CLOUDFLARE_WARP_INSTALLER_IMAGE} as cloudflare_warp_installer
-RUN apt update && apt install ca-certificates curl gnupg lsb-release libcap2-bin gosu dbus -y --no-install-recommends && \
+FROM debian:${CLOUDFLARE_WARP_INSTALLER_IMAGE} AS cloudflare_warp_installer
+RUN apt update && apt install ca-certificates curl gnupg2 lsb-release libcap2-bin gosu -y --no-install-recommends && \
     curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg && \
     echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/cloudflare-client.list && \
     apt update && apt install cloudflare-warp --no-install-recommends -y
@@ -33,8 +33,12 @@ COPY --from=cloudflare_warp_installer /usr/sbin/gosu /usr/sbin/gosu
 COPY . /xray_base/
 WORKDIR /xray_base
 
-RUN apt update && apt install dbus libnspr4 libnss3 --no-install-recommends -y && \
-    apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apt update && apt install dbus iproute2 nftables libpcap0.8 libnspr4 libnss3 --no-install-recommends -y && \
+    apt clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    rm -rf /usr/share/doc /usr/share/man /usr/share/locale && \
+    rm -rf /usr/bin/apt /usr/bin/apt-get && \
+    rm -rf /usr/bin/dpkg /usr/bin/dpkg-deb
 
 RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=requirements.txt,target=requirements.txt \
@@ -43,6 +47,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 RUN mkdir /xray_base/caddy_certs /run/dbus && \
     chmod +x /usr/bin/caddy && \
     setcap cap_net_bind_service=+ep /usr/bin/caddy && \
-    mv entrypoint.sh /usr/local/bin && chmod +x /usr/local/bin/entrypoint.sh
+    mv entrypoint.sh /usr/local/bin && \
+    chmod +x /usr/local/bin/entrypoint.sh
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
