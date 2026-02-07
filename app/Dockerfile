@@ -28,10 +28,10 @@ ENV XDG_DATA_HOME=/xray_base/caddy_certs
 EXPOSE 443/tcp
 EXPOSE 443/udp
 COPY --from=caddy_builder /usr/bin/caddy /usr/bin/caddy
-COPY --from=cloudflare_warp_installer /usr/bin/warp-cli /usr/bin/warp-cli
-COPY --from=cloudflare_warp_installer /usr/bin/warp-svc /usr/bin/warp-svc
-COPY --from=cloudflare_warp_installer /usr/sbin/setcap /usr/sbin/setcap
-COPY --from=cloudflare_warp_installer /usr/sbin/gosu /usr/sbin/gosu
+#COPY --from=cloudflare_warp_installer /usr/bin/warp-cli /usr/bin/warp-cli
+#COPY --from=cloudflare_warp_installer /usr/bin/warp-svc /usr/bin/warp-svc
+#COPY --from=cloudflare_warp_installer /usr/sbin/setcap /usr/sbin/setcap
+#COPY --from=cloudflare_warp_installer /usr/sbin/gosu /usr/sbin/gosu
 COPY . /xray_base/
 WORKDIR /xray_base
 
