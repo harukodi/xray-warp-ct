@@ -11,13 +11,13 @@ RUN xcaddy build \
 FROM caddy:${CADDY_SERVER_VERSION}
 
 # Install step for cloudflare-warp
-#FROM debian:${CLOUDFLARE_WARP_INSTALLER_IMAGE} AS cloudflare_warp_installer
-#RUN apt update && apt install ca-certificates curl gnupg2 lsb-release libcap2-bin gosu binutils -y --no-install-recommends && \
-#    curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg && \
-#    echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/cloudflare-client.list && \
-#    apt update && apt install cloudflare-warp --no-install-recommends -y && \
-#    strip --strip-unneeded /usr/bin/warp-cli && \
-#    strip --strip-unneeded /usr/bin/warp-svc
+FROM debian:${CLOUDFLARE_WARP_INSTALLER_IMAGE} AS cloudflare_warp_installer
+RUN apt update && apt install ca-certificates curl gnupg2 lsb-release libcap2-bin gosu binutils -y --no-install-recommends && \
+    curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg && \
+    echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/cloudflare-client.list && \
+    apt update && apt install cloudflare-warp --no-install-recommends -y && \
+    strip --strip-unneeded /usr/bin/warp-cli && \
+    strip --strip-unneeded /usr/bin/warp-svc
 
 # Build the base image for the xray_xhttp container
 FROM python:${PYTHON_VERSION}
@@ -28,19 +28,12 @@ ENV XDG_DATA_HOME=/xray_base/caddy_certs
 EXPOSE 443/tcp
 EXPOSE 443/udp
 COPY --from=caddy_builder /usr/bin/caddy /usr/bin/caddy
-#COPY --from=cloudflare_warp_installer /usr/bin/warp-cli /usr/bin/warp-cli
-#COPY --from=cloudflare_warp_installer /usr/bin/warp-svc /usr/bin/warp-svc
-#COPY --from=cloudflare_warp_installer /usr/sbin/setcap /usr/sbin/setcap
-#COPY --from=cloudflare_warp_installer /usr/sbin/gosu /usr/sbin/gosu
+COPY --from=cloudflare_warp_installer /usr/bin/warp-cli /usr/bin/warp-cli
+COPY --from=cloudflare_warp_installer /usr/bin/warp-svc /usr/bin/warp-svc
+COPY --from=cloudflare_warp_installer /usr/sbin/setcap /usr/sbin/setcap
+COPY --from=cloudflare_warp_installer /usr/sbin/gosu /usr/sbin/gosu
 COPY . /xray_base/
 WORKDIR /xray_base
-
-RUN apt update && apt install ca-certificates curl gnupg2 lsb-release libcap2-bin gosu binutils -y --no-install-recommends && \
-    curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg && \
-    echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/cloudflare-client.list && \
-    apt update && apt install cloudflare-warp --no-install-recommends -y && \
-    strip --strip-unneeded /usr/bin/warp-cli && \
-    strip --strip-unneeded /usr/bin/warp-svc
 
 RUN apt update && apt install dbus iproute2 nftables libpcap0.8 libnspr4 libnss3 --no-install-recommends -y && \
     apt clean && \
