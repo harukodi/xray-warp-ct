@@ -6,7 +6,7 @@ from generate_caddy_config import generate_caddy_config
 from classes.Services import Services
 from classes.XrayConfig import XrayConfig
 from classes.Warp import Warp
-from vars import warp_mode, enable_warp
+from time import sleep
 
 service_manager = Services()
 xray_config_manager = XrayConfig()
@@ -44,6 +44,7 @@ def main():
         setup_xray_core()
         warp_manager.enable_warp_tunnel()
     
+    sleep(10)
     service_manager.start_services()
     exit_function()
 
