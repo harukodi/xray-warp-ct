@@ -6,6 +6,8 @@ declare -A xray_config_values=(
     ["XRAY_PATH"]="$2"
     ["XRAY_UUID"]="$3"
     ["CLOUDFLARE_AUTH_TOKEN"]="$4"
+    ["XRAY_ENCRYPTION_KEY"]="$5"
+    ["XRAY_DECRYPTION_KEY"]="$6"
 )
 
 function create_docker_volume_caddyfile_func () {
@@ -65,9 +67,9 @@ function main () {
     start_xray_warp_container_func
 }
 
-if [ "$#" -ne 4 ]; then
+if [ "$#" -ne 6 ]; then
     echo "Error: Missing required parameters."
-    echo "Usage: $0 <DOMAIN_NAME> <XRAY_PATH> <XRAY_UUID> <CLOUDFLARE_AUTH_TOKEN>"
+    echo "Usage: $0 <DOMAIN_NAME> <XRAY_PATH> <XRAY_UUID> <CLOUDFLARE_AUTH_TOKEN> <XRAY_ENCRYPTION_KEY> <XRAY_DECRYPTION_KEY>"
     exit 1
 else
     main

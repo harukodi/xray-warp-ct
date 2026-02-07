@@ -36,7 +36,8 @@
                             {
                                 "id": "${UUID}",
                                 "security": "auto",
-                                "encryption": "none"
+                                "flow": "xtls-rprx-vision",
+                                "encryption": "${XRAY_ENCRYPTION_KEY}"
                             }
                         ]
                     }

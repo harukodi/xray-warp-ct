@@ -21,12 +21,15 @@ services:
   xray-warp:
     image: xia1997x/xray-warp:latest
     container_name: xray-warp-ct
-    user: 1000:1000
     restart: always
     env_file:
       - .env
     ports:
       - '$PORT:443'
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
     volumes:
       - ./config/certs:/xray_base/caddy_certs
       - ./config/xray_config:/xray_base/xray_config
@@ -39,13 +42,9 @@ services:
 DOMAIN_NAME=
 CLOUDFLARE_AUTH_TOKEN=
 PORT=443
-#XRAY_UUID=
-#XRAY_PATH=
 ENABLE_CADDY_LOG=False
 ENABLE_WARP=True
-ENABLE_IPV6=False
 XRAY_VERSION=latest
-WGCF_VERSION=latest
 ```
 ### **Environment variables:**
 > `DOMAIN_NAME`
@@ -69,21 +68,11 @@ WGCF_VERSION=latest
 > - To set a custom Xray version, use e.g., `XRAY_VERSION=25.3.6`.
 > - Default: `latest`
 > - `Required`
->
-> `WGCF_VERSION`
-> - Used to fetch the `WGCF` binary.
-> - To set a custom WGCF version, use e.g., `WGCF_VERSION=2.2.29`.
-> - Default: `latest`
-> - `Required`
 > 
 > `ENABLE_CADDY_LOG`
 > - Can be set to `True` to enable the log output of Caddy.
 > - Default: `False`
 > 
-> `ENABLE_IPV6`
-> - Can be set to `True` if the VPS supports IPv6.
-> - Default: `False`
->
 > `XRAY_UUID`
 > - Optional. If set, this value will be used as the Xray UUID.
 > - If not set (commented out or empty), the script will automatically generate a valid UUID.
