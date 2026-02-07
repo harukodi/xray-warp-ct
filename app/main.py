@@ -44,7 +44,6 @@ def main():
         setup_xray_core()
         warp_manager.enable_warp_tunnel()
     
-    sleep(10)
     service_manager.start_services()
     exit_function()
 
