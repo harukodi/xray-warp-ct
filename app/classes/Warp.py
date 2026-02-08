@@ -1,10 +1,9 @@
 import pty, subprocess, sys, os, pty
-from vars import enable_warp, warp_mode
+from vars import enable_warp
 
 class Warp:
     def __init__(self):
         self.enable_warp = enable_warp
-        self.warp_mode = warp_mode
     
     def _register(self):
         master, slave = pty.openpty()
@@ -26,20 +25,13 @@ class Warp:
             sys.exit(1)
 
     def _set_mode(self):
-        supported_modes = ["warp", "warp+doh", "warp+dot"]
         set_warp_mode_result = subprocess.run(
-            ["warp-cli", "mode", f"{self.warp_mode}"],
+            ["warp-cli", "mode", "proxy"],
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL
         )
         if set_warp_mode_result.returncode == 0:
-            print(f"Warp mode set to {self.warp_mode}")
-        else:
-            print(
-                f"Error: Could not change Warp mode to '{self.warp_mode}'.\n"
-                "Supported modes are:\n  - " + "\n  - ".join(supported_modes)
-            )
-            sys.exit(1)
+            print(f"Warp mode set to proxy")
 
     def _connect(self):
         connect_warp_result = subprocess.run(
