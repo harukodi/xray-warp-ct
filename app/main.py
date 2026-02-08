@@ -6,7 +6,6 @@ from generate_caddy_config import generate_caddy_config
 from classes.Services import Services
 from classes.XrayConfig import XrayConfig
 from classes.Warp import Warp
-from time import sleep
 
 service_manager = Services()
 xray_config_manager = XrayConfig()
