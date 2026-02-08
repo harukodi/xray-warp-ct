@@ -1,10 +1,9 @@
 import pty, subprocess, sys, os, pty
-from vars import enable_warp, warp_mode
+from vars import enable_warp
 
 class Warp:
     def __init__(self):
         self.enable_warp = enable_warp
-        self.warp_mode = warp_mode
     
     def _register(self):
         master, slave = pty.openpty()
