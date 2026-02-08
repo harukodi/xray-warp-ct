@@ -57,7 +57,7 @@ class XrayConfig:
 
     def generate_xray_qr_code_and_vless_link(self):
         encoded_remark = quote(domain_name, safe="")
-        vless_uri = f"vless://{self.xray_uuid}@{self.domain_name}:{self.port}?encryption={self.xray_encryption_key}&security=tls&sni={self.domain_name}&alpn=h3%2Ch2%2Chttp%2F1.1&type=xhttp&host={self.domain_name}&path={self.xray_path}&mode=auto#{encoded_remark}"
+        vless_uri = f"vless://{self.xray_uuid}@{self.domain_name}:{self.port}?encryption={self.xray_encryption_key}&flow=xtls-rprx-vision&security=tls&sni={self.domain_name}&alpn=h3%2Ch2%2Chttp%2F1.1&type=xhttp&host={self.domain_name}&path={self.xray_path}&mode=auto#{encoded_remark}"
         
         qr_code = segno.make_qr(vless_uri)
         qr_code.save(self.xray_qr_code_file, scale=8)
